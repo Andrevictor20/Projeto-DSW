@@ -1,0 +1,44 @@
+body {
+    background-color: #000;
+    color: white;
+}
+.navbar {
+    background-color: #4c9ff0;
+    padding: 1rem 2rem; 
+}
+
+.btn-custom {
+    background-color: #3498db;
+    border: none;
+    color: white;
+    border-radius: 10px;
+    padding: 15px 30px; 
+    font-size: 1.2rem; 
+}
+
+.btn-custom:hover {
+    background-color: #2874a6;
+}
+
+.button-container {
+    max-width: 800px; 
+    margin: 0 auto;
+}
+
+.circle {
+    width: 40px;
+    height: 40px;
+    background-color: black;
+    border-radius: 50%;
+}
+
+.card {
+    background-color: #5dade2;
+    border-radius: 10px;
+}
+
+.card-footer {
+    background-color: black;
+    color: white;
+}
+

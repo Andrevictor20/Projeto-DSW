@@ -1,0 +1,21 @@
+body {
+    background-color: #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+.register-container {
+    background-color: #007bff;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    width: 300px;
+}
+.register-container input {
+    margin-bottom: 10px;
+}
+.register-container button {
+    margin-top: 10px;
+}
