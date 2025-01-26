@@ -1,0 +1,18 @@
+body{
+  padding: 20px;
+}
+.profile-card {
+    margin-bottom: 30px; /* Espaçamento abaixo do cartão de perfil */
+}
+
+.room-card {
+    margin-bottom: 20px; /* Espaçamento abaixo dos cartões de sala */
+}
+
+.profile-pic {
+    background-color: white; /* Cor de fundo para a imagem do perfil */
+}
+
+h3 {
+    margin-top: 40px; /* Espaçamento acima dos títulos das seções */
+}

@@ -1,0 +1,39 @@
+body {
+    padding: 20px; /* Padding padrão para o corpo da página */
+    background-color: #000; /* Cor de fundo padrão */
+    color: #fff; /* Cor do texto padrão */
+}
+
+.photo-placeholder {
+    width: 100%; 
+    height: 200px; /* Altura padrão para espaços reservados */
+    background-color: gray; /* Cor de fundo para a foto representativa */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+}
+
+.rounded {
+    border-radius: 0.5rem; /* Bordas arredondadas padrão */
+}
+
+.btn {
+    margin: 5px; /* Margem padrão para botões */
+}
+
+/* Estilos de cartões */
+.profile-card,
+.photo-card,
+.request-card,
+.feature-card {
+    margin-bottom: 20px; /* Espaçamento padrão abaixo dos cartões */
+}
+
+/* Estilo de cabeçalho */
+header {
+    background-color: #007bff; /* Cor de fundo do cabeçalho */
+    padding: 1rem; /* Padding do cabeçalho */
+    text-align: end; /* Alinhamento do texto no cabeçalho */
+} 

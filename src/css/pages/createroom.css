@@ -1,0 +1,23 @@
+body {
+  background-color: #000;
+  color: #fff;
+  padding: 20px;
+
+}
+.navbar {
+  background-color: #4c9ff0; /* Cor da navbar igual ao home.css */
+}
+.navbar-brand {
+  color: #fff; /* Cor do texto da navbar */
+}
+.form-container {
+  margin-top: 50px;
+}
+.btn-custom {
+  background-color: #5bc0de;
+  color: #000;
+  margin: 10px;
+}
+.form-check-label {
+  color: #fff;
+}

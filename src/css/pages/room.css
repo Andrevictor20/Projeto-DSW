@@ -1,0 +1,33 @@
+body {
+  background-color: #000;
+  color: #fff;
+  padding: 20px;
+
+}
+.navbar {
+  background-color: #5bc0de;
+}
+.navbar-brand, .form-container h1 {
+  color: #000;
+}
+.btn-filter {
+  background-color: #5bc0de;
+  color: #000;
+  margin: 5px;
+}
+.competitor-box {
+  background-color: #007bff;
+  color: #fff;
+  padding: 20px;
+  margin: 15px;
+  text-align: center;
+  width: 200px;
+  flex: 1 1 200px;
+}
+.btn-vote, .btn-explore {
+  margin: 5px;
+}
+.btn-explore {
+  background-color: #fff;
+  color: #000;
+}

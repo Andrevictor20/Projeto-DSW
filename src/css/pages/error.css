@@ -1,0 +1,14 @@
+body {
+    padding: 20px; /* Remove padding do corpo */
+}
+
+.photo-placeholder {
+    width: 100%; 
+    height: 200px; /* Ajuste a altura conforme necessário */
+    background-color: gray; /* Cor de fundo para a foto representativa */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+} 

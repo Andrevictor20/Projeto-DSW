@@ -1,0 +1,11 @@
+body{
+  padding: 20px;
+}
+.upload-container {
+    height: 200px; /* Ajuste a altura conforme necessário */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px dashed white; /* Estilo de borda para indicar área de upload */
+    margin: 0 auto;
+}

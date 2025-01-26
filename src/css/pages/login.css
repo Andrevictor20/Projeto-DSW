@@ -5,6 +5,8 @@ body {
   align-items: center;
   height: 100vh;
   margin: 0;
+  padding: 20px;
+
 }
 .login-container {
   background-color: #007bff;

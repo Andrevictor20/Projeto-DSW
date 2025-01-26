@@ -1,0 +1,19 @@
+body {
+    padding: 20px; /* Adiciona um padding ao corpo da página */
+}
+
+.profile-card {
+    margin-bottom: 30px; /* Espaçamento abaixo do cartão de perfil */
+}
+
+.photo-card {
+    margin-bottom: 20px; /* Espaçamento abaixo dos cartões de foto */
+}
+
+.request-card {
+    margin-bottom: 20px; /* Espaçamento abaixo dos cartões de solicitação */
+}
+
+.profile-pic {
+    background-color: white; /* Cor de fundo para a imagem do perfil */
+}

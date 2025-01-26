@@ -1,10 +1,12 @@
 body {
     background-color: #000;
     color: white;
+    padding: 20px;
+
 }
 .navbar {
     background-color: #4c9ff0;
-    padding: 1rem 2rem; 
+    padding: 1rem;
 }
 
 .btn-custom {
@@ -30,6 +32,7 @@ body {
     height: 40px;
     background-color: black;
     border-radius: 50%;
+    margin-left: auto;
 }
 
 .card {
@@ -41,4 +44,3 @@ body {
     background-color: black;
     color: white;
 }
-

@@ -1,0 +1,8 @@
+body {
+    padding: 20px; /* Adiciona um padding ao corpo da página */
+}
+
+.profile-pic {
+    background-color: white; /* Cor de fundo para a imagem do perfil */
+    margin: 0 auto; /* Centraliza a imagem do perfil */
+} 

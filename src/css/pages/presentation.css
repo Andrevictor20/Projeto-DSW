@@ -1,0 +1,25 @@
+body {
+    padding: 20px; /* Adiciona um padding ao corpo da página */
+}
+
+.photo-placeholder {
+    width: 100%; 
+    height: 200px; /* Ajuste a altura conforme necessário */
+    background-color: gray; /* Cor de fundo para a foto representativa */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+}
+
+.feature-card {
+    margin-bottom: 20px; /* Espaçamento abaixo dos cartões de funcionalidade */
+}
+
+.icon-placeholder {
+    width: 50px; 
+    height: 50px; /* Ajuste a altura conforme necessário */
+    background-color: gray; /* Cor de fundo para o ícone */
+    margin: 0 auto 10px; /* Centraliza o ícone */
+}
