@@ -1,11 +1,14 @@
 body {
-    padding: 20px; /* Adiciona um padding ao corpo da página */
+    padding: 20px; 
 }
 
+section{
+    min-height: 100vh;
+}
 .photo-placeholder {
     width: 100%; 
-    height: 200px; /* Ajuste a altura conforme necessário */
-    background-color: gray; /* Cor de fundo para a foto representativa */
+    height: 200px; 
+    background-color: gray; 
     display: flex;
     align-items: center;
     justify-content: center;
