@@ -13,13 +13,28 @@ body {
 .card-body{
     height: 150px;
 }
-.btn-info {
-    background-color: #007bff;
-    border: none;
-    width: 30%;
-    height: 150px;
+.card-title{
+    font-size: 20px;
+    font-weight: bold;
 }
 
+/* .btn {
+    background-color: #007bff;
+    width: 200px;
+    height: 150px;
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+} */
+
+.btn-info {
+    width: 30%;
+    height: 150px;
+    background-color: #007bff;
+    border: none;
+    font-weight: bold;
+   
+}
 .btn-info:hover {
     background-color: #2c8bf0;
 }
@@ -31,4 +46,8 @@ body {
     background-color: #fff; /* Cor de fundo, pode ser a cor da imagem */
     border: 2px solid #007bff; /* Borda azul */
     display: inline-block; /* Para alinhar corretamente */
+}
+.ml-auto{
+    margin-left: auto; 
+    margin-right: 20px
 }
