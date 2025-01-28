@@ -1,23 +1,40 @@
 body {
   background-color: #000;
-  color: #fff;
-  padding: 20px;
-
 }
-.navbar {
-  background-color: #4c9ff0; /* Cor da navbar igual ao home.css */
+
+.navbar{
+  padding: 10px;
+  margin: 20px;
 }
 .navbar-brand {
-  color: #fff; /* Cor do texto da navbar */
+  color: #ffffff; 
 }
 .form-container {
   margin-top: 50px;
 }
 .btn-custom {
-  background-color: #5bc0de;
-  color: #000;
+  background-color: #007bff;
+  color: #000000;
   margin: 10px;
 }
 .form-check-label {
-  color: #fff;
+  color: #ffffff;
+}
+.profile-pic {
+  width: 40px; 
+  height: 40px; 
+  border-radius: 50%;
+  background-color: #fff; 
+  border: 2px solid #007bff; 
+  display: inline-block;
+}
+.ml-auto{
+  margin-left: auto; 
+  margin-right: 20px
+}
+
+input[type="password"]:disabled {
+  background-color: #9c9c9c; 
+  color: #bbbbbb; 
+  border-color: #9c9c9c;
 }

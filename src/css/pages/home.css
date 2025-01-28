@@ -1,31 +1,22 @@
-/* src/css/pages/home.css */
 body {
     background-color: #000;
 }
 
 .navbar{
     padding: 10px;
-    margin: 20px 20px 20px 20px
+    margin: 20px ;
 }
 .card {
     border: none;
 }
 .card-body{
-    height: 150px;
+    height: 200px;
 }
 .card-title{
     font-size: 20px;
     font-weight: bold;
 }
 
-/* .btn {
-    background-color: #007bff;
-    width: 200px;
-    height: 150px;
-    display: flex; 
-    align-items: center; 
-    justify-content: center; 
-} */
 
 .btn-info {
     width: 30%;
@@ -40,12 +31,12 @@ body {
 }
 
 .profile-pic {
-    width: 40px; /* Ajuste o tamanho conforme necessário */
-    height: 40px; /* Ajuste o tamanho conforme necessário */
-    border-radius: 50%; /* Faz o círculo */
-    background-color: #fff; /* Cor de fundo, pode ser a cor da imagem */
-    border: 2px solid #007bff; /* Borda azul */
-    display: inline-block; /* Para alinhar corretamente */
+    width: 40px; 
+    height: 40px; 
+    border-radius: 50%; 
+    background-color: #fff; 
+    border: 2px solid #007bff; 
+    display: inline-block;
 }
 .ml-auto{
     margin-left: auto; 
