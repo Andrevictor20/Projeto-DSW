@@ -8,12 +8,15 @@
     <title>Perfil do Participante</title>
 </head>
 <body class="bg-dark text-white">
-    <header class="bg-primary p-3 text-end">
-        <button class="btn btn-light">INÍCIO</button>
-    </header>
+    <nav class="navbar navbar-expand-lg navbar-light bg-primary mb-4 rounded">
+        <a class="navbar-brand text-white" href="../../index.html">INICIO</a>
+        <div class="ml-auto">
+            <div class="profile-pic"></div>
+        </div>
+    </nav>
     <main class="container mt-5">
         <div class="profile-card bg-primary rounded p-4 text-center mb-4">
-            <div class="profile-pic rounded-circle mb-3" style="width: 100px; height: 100px; background-color: white;"></div>
+            <div class="profile-pic rounded-circle mb-3" "></div>
             <h2>Usuario1111</h2>
             <h5>Bio</h5>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
@@ -44,21 +47,23 @@
                     <h5>Sala FFFFF</h5>
                     <p>Participantes 25/35</p>
                     <p>Semi privada</p>
+                    <button class="btn btn-light mt-2">Solicitar entrada</button>
+
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="room-card bg-primary rounded p-3 text-center">
                     <h5>Sala XXSJK</h5>
                     <p>Participantes 10/15</p>
-                    <p>Semi privada</p>
-                    <button class="btn btn-light mt-2">Solicitar Entrada</button>
+                    <p>Aberta</p>
+                    <button class="btn btn-light mt-2">Entrar</button>
                 </div>
             </div>
         </div>
     </main>
-    <footer class="text-center mt-4">
-        <button class="btn btn-light">VOLTAR</button>
-    </footer>
+    <div class="text-center mt-4">
+        <a href="participants.html" class="btn btn-light">VOLTAR</a>
+    </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>

@@ -1,19 +1,45 @@
-body {
-    padding: 20px; /* Adiciona um padding ao corpo da página */
+.navbar{
+    padding: 10px;
+    margin: 20px ;
 }
 
 .profile-card {
-    margin-bottom: 30px; /* Espaçamento abaixo do cartão de perfil */
+    margin-bottom: 30px; 
 }
 
 .photo-card {
-    margin-bottom: 20px; /* Espaçamento abaixo dos cartões de foto */
+    height: 200px;
+    margin-bottom: 20px; 
 }
 
 .request-card {
-    margin-bottom: 20px; /* Espaçamento abaixo dos cartões de solicitação */
+    margin-bottom: 20px
 }
-
+.big-profile-pic {
+    width: 200px; 
+    height: 200px; 
+    border-radius: 50%; 
+    background-color: #ffffff; 
+    border: 2px solid #007bff; 
+    display: inline-block;
+}
 .profile-pic {
-    background-color: white; /* Cor de fundo para a imagem do perfil */
+    width: 40px; 
+    height: 40px; 
+    border-radius: 50%; 
+    background-color: #ffffff; 
+    border: 2px solid #007bff; 
+    display: inline-block;
+}
+.small-profile-pic {
+    width: 50px; 
+    height: 50px; 
+    border-radius: 50%; 
+    background-color: #ffffff; 
+    border: 2px solid #007bff; 
+    display: inline-block;
+}
+.ml-auto{
+    margin-left: auto; 
+    margin-right: 20px
 }
