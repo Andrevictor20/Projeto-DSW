@@ -1,7 +1,3 @@
-body {
-    padding: 20px; 
-}
-
 section{
     min-height: 100vh;
 }
@@ -17,7 +13,7 @@ section{
 }
 
 .feature-card {
-    margin-bottom: 20px; /* Espaçamento abaixo dos cartões de funcionalidade */
+    margin-bottom: 20px;
 }
 
 .icon-placeholder {
@@ -26,3 +22,6 @@ section{
     background-color: #cccccc; 
     margin: 0 auto 10px; 
 }
+
+
+    
