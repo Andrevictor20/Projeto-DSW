@@ -10,6 +10,11 @@
   max-width: 300px;
   max-height: 600px;
   align-items: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s;
+}
+.competitor-box:hover {
+  transform: scale(1.05);
 }
 .btn-vote, .btn-explore {
   margin: 5px;
