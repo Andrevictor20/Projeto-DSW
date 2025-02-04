@@ -34,17 +34,17 @@
         </div>
     </nav>
     <div class="login-container">
-        <h2>Olá, seja bem vindo(a)!</h2>
+        <h2 class="mb-4">Olá, seja bem vindo(a)!</h2>
         <form>
             <div class="form-group">
-                <input type="email" class="form-control" placeholder="Email">
+                <input type="email" class="form-control" placeholder="Email" required>
             </div>
             <div class="form-group">
-                <input type="password" class="form-control" placeholder="Senha">
+                <input type="password" class="form-control" placeholder="Senha" required>
             </div>
-            <a href="./home.html"><button type="button" class="btn btn-dark btn-block">Entrar</button></a>
-            <a href="./createaccount.html"><button type="button" class="btn btn-dark btn-block">Novo aqui? Crie sua conta</button></a>
-            <a href="./forgetpswd.html"><button type="button" class="btn btn-dark btn-block">Esqueceu a senha?</button></a>
+            <button type="submit" class="btn btn-primary btn-block">Entrar</button>
+            <a href="./createaccount.html" class="btn btn-secondary btn-block">Novo aqui? Crie sua conta</a>
+            <a href="./forgetpswd.html" class="btn btn-link text-white">Esqueceu a senha?</a>
         </form>
     </div>
     <footer class="bg-black  text-center text-white mt-4 fixed-bottom">

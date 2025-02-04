@@ -6,7 +6,6 @@ body {
     height: 100vh;
     margin: 0;
     padding: 20px;
-
 }
 
 .register-container {
@@ -15,7 +14,6 @@ body {
     border-radius: 10px;
     text-align: center;
     width: 400px;
-    height: 400px;
 }
 .register-container input {
     margin-bottom: 20px;
