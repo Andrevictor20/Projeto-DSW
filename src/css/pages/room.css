@@ -10,8 +10,6 @@
   max-width: 300px;
   max-height: 600px;
   align-items: center;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  transition: transform 0.2s;
 }
 .competitor-box:hover {
   transform: scale(1.05);
@@ -44,7 +42,7 @@
   margin-bottom: 10px; 
 }
 .competitor-image {
-  width: 97%;
+  width: 95%;
   height: 350px;
   border-radius: 10px;
   margin: 0 auto;

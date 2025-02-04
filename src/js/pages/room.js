@@ -19,11 +19,12 @@ function createCompetitorBoxes(count) {
         const competitorBox = document.createElement('div');
         competitorBox.className = 'competitor-box text-white';
         competitorBox.innerHTML = `
-            <img src="../assets/images/image${i}.jpeg" alt="Descrição da foto" class="competitor-image">
+            <a href="explorephoto.html">
+                <img src="../assets/images/image${i}.jpeg" alt="Descrição da foto" class="competitor-image">
+            </a>
             <div class="vote-count">Votos: 0</div>
             <div class="d-flex justify-content-between">
                 <button class="btn btn-light btn-vote">VOTAR</button>
-                <a href="explorephoto.html" class="btn btn-light btn-explore">EXPLORAR</a>
             </div>
         `;
         container.appendChild(competitorBox); 
