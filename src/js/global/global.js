@@ -1,1 +1,0 @@
-//caso exista um js para usar globalmente 

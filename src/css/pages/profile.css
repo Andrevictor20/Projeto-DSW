@@ -1,15 +1,15 @@
-.navbar{
-    padding: 10px;
-    margin: 20px ;
-}
-
 .profile-card {
     margin-bottom: 30px; 
+    background-color: #000000;
+
 }
 
 .photo-card {
-    height: 200px;
+    height: 300px;
     margin-bottom: 20px; 
+    width: 95%;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .request-card {
@@ -23,14 +23,6 @@
     border: 2px solid #007bff; 
     display: inline-block;
 }
-.profile-pic {
-    width: 40px; 
-    height: 40px; 
-    border-radius: 50%; 
-    background-color: #ffffff; 
-    border: 2px solid #007bff; 
-    display: inline-block;
-}
 .small-profile-pic {
     width: 50px; 
     height: 50px; 
@@ -39,7 +31,29 @@
     border: 2px solid #007bff; 
     display: inline-block;
 }
-.ml-auto{
-    margin-left: auto; 
-    margin-right: 20px
+.main-container{
+    margin-top: 100px;
+    margin-bottom: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+
+  .image-placeholder {
+    height: 100%;
+    width: 100%;
+    background-color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.carousel-control-prev,
+.carousel-control-next {
+    width: 5%;
+    border: none;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    background-color: #000000;
+    border-radius: 50%;
 }
