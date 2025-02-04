@@ -20,9 +20,20 @@
   background-color: #fff;
   color: #000;
 }
-.btn-primary,.btn-vote{
+.btn-secondary{
+  height: 50px; 
+  display: flex; 
+  align-items: center; 
+  justify-content: center;
+}
+.btn-custom,.btn-vote{
   background-color:#5bc0de;
+  color:#ffffff;
   border: none;
+  height: 50px; 
+  display: flex; 
+  align-items: center; 
+  justify-content: center;
 }
 .vote-count {
   font-size: 1.2em; 
