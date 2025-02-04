@@ -2,7 +2,7 @@ if (!localStorage.getItem('users')) {
     localStorage.setItem('users', JSON.stringify([]));
 }
 
-function handleCreateAccount(event) {
+function CreateAccount(event) {
     event.preventDefault();
     
     const username = document.getElementById('username').value;
@@ -36,7 +36,7 @@ function handleCreateAccount(event) {
 }
 
 
-function handleLogin(event) {
+function Login(event) {
     event.preventDefault();
     
     const email = document.querySelector('input[type="email"]').value;
@@ -56,10 +56,12 @@ function handleLogin(event) {
 const currentPage = window.location.pathname;
 
 if (currentPage.includes('createaccount.html')) {
-    document.querySelector('form').addEventListener('submit', handleCreateAccount);
+    document.querySelector('form').addEventListener('submit', CreateAccount);
 }
 
 if (currentPage.includes('login.html')) {
-    document.querySelector('form').addEventListener('submit', handleLogin);
+    document.querySelector('form').addEventListener('submit', Login);
 }
+console.log(localStorage)
+
 
