@@ -28,15 +28,19 @@
             </div>
         </div>
     </nav>   
-    <div class="login-container">
-        <h2>Recuperar Senha</h2>
-        <form>
-            <div class="form-group">
-                <input type="email" class="form-control" placeholder="Email" required>
-            </div>
-            <button type="submit" class="btn btn-dark btn-block">Enviar Link de Recuperação</button>
-            <a href="./login.html"><button type="button" class="btn btn-dark btn-block">Voltar para Login</button></a>
-        </form>
+    <div class="container min-vh-100 d-flex align-items-center justify-content-center">
+        <div class="card bg-primary text-white p-4 rounded-4" style="width: 400px;">
+            <h2 class="fw-bold mb-4">Recuperar Senha</h2>
+            <form>
+                <div class="mb-3">
+                    <input type="email" class="form-control" placeholder="Email" required>
+                </div>
+                <button type="submit" class="btn btn-dark w-100 mb-2">Enviar Link de Recuperação</button>
+                <a href="./login.html" class="w-100">
+                    <button type="button" class="btn btn-dark w-100">Voltar para Login</button>
+                </a>
+            </form>
+        </div>
     </div>
     <footer class="bg-black  text-center text-white mt-4 fixed-bottom">
         <div class="container p-4">
