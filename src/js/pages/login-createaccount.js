@@ -62,6 +62,5 @@ if (currentPage.includes('createaccount.html')) {
 if (currentPage.includes('login.html')) {
     document.querySelector('form').addEventListener('submit', Login);
 }
-console.log(localStorage)
 
 
