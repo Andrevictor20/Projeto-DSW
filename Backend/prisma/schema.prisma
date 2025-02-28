@@ -1,0 +1,100 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id             String        @id @default(uuid())
+  name           String
+  email          String        @unique
+  password       String
+  profilePicture String?
+  bio            String?
+  createdAt      DateTime      @default(now())
+  photos         Photo[]
+  ownedRooms     Room[]        @relation("OwnerToRoom")
+  rooms          RoomUser[]
+  votes          Vote[]
+  roomRequests   RoomRequest[]
+}
+
+model Room {
+  id              String        @id @default(uuid())
+  name            String
+  privacy         PrivacyLevel
+  password        String?
+  maxParticipants Int
+  createdAt       DateTime      @default(now())
+  ownerId         String
+  photos          Photo[]
+  owner           User          @relation("OwnerToRoom", fields: [ownerId], references: [id], onDelete: Cascade)
+  participants    RoomUser[]
+  requests        RoomRequest[]
+}
+
+model RoomUser {
+  id     String   @id @default(uuid())
+  userId String
+  roomId String
+  role   UserRole
+  room   Room     @relation(fields: [roomId], references: [id], onDelete: Cascade)
+  user   User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, roomId])
+}
+
+model Photo {
+  id        String   @id @default(uuid())
+  name      String
+  filePath  String
+  userId    String
+  roomId    String
+  createdAt DateTime @default(now())
+  room      Room     @relation(fields: [roomId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  votes     Vote[]
+}
+
+model Vote {
+  id        String   @id @default(uuid())
+  userId    String
+  photoId   String
+  createdAt DateTime @default(now())
+  photo     Photo    @relation(fields: [photoId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, photoId])
+}
+
+model RoomRequest {
+  id        String        @id @default(uuid())
+  userId    String
+  roomId    String
+  status    RequestStatus @default(PENDING)
+  createdAt DateTime      @default(now())
+  user      User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  room      Room          @relation(fields: [roomId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, roomId])
+}
+
+enum PrivacyLevel {
+  OPEN
+  SEMI_PRIVATE
+  PRIVATE
+}
+
+enum UserRole {
+  ADMIN
+  MEMBER
+}
+
+enum RequestStatus {
+  PENDING
+  ACCEPTED
+  REJECTED
+}
