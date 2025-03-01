@@ -1,6 +1,20 @@
 import fastify from 'fastify';
+import { userRoutes } from './routes/users-route';
+import { authRoutes } from './routes/auth-route';
+import { roomsRoutes } from './routes/rooms-route';
+import fastifyCookie from "@fastify/cookie";
+
+
 
 const app = fastify();
+app.register(fastifyCookie, {
+  secret: "secret", 
+  parseOptions: {},
+});
+
+app.register(userRoutes)
+app.register(authRoutes)
+app.register(roomsRoutes)
 app.listen({ port: 5700 }, (err, address) => {
   if (err) {
     console.error(err);
