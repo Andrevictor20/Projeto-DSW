@@ -3,6 +3,7 @@ import { userRoutes } from './routes/users-route';
 import { authRoutes } from './routes/auth-route';
 import { roomsRoutes } from './routes/rooms-route';
 import fastifyCookie from "@fastify/cookie";
+import { photoRoutes } from './routes/photo-route';
 
 
 
@@ -15,6 +16,7 @@ app.register(fastifyCookie, {
 app.register(userRoutes)
 app.register(authRoutes)
 app.register(roomsRoutes)
+app.register(photoRoutes)
 app.listen({ port: 5700 }, (err, address) => {
   if (err) {
     console.error(err);

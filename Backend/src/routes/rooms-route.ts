@@ -80,58 +80,7 @@ export async function roomsRoutes(app: FastifyInstance) {
 
     return reply.send(rooms);
   });
-
-  // Obter detalhes de uma sala específica
-  app.get("/rooms/:id", async (request, reply) => {
-    const { id } = request.params as { id: string };
-
-    const room = await prisma.room.findUnique({
-      where: { id },
-      select: {
-        id:true,
-        name: true,
-        maxParticipants: true,
-        privacy:true,
-        owner: {
-          select: {
-            id: true,
-            name: true,
-          },
-        },
-        participants: {
-          select: {
-            user: {
-              select: {
-                id: true,
-                name: true,
-              },
-            },
-          },
-        },
-        photos: {
-          select: {
-            id: true,
-            name: true,
-          },
-        },
-      },
-    });
-
-    if (!room) {
-      return reply.status(404).send({ error: "Sala não encontrada" });
-    }
-
-    return reply.send({
-      id:room.id,
-      name: room.name,
-      maxParticipants: room.maxParticipants,
-      privacy:room.privacy,
-      owner: room.owner,
-      participants: room.participants.map((p) => p.user),
-      photos: room.photos,
-    });
-  });
-
+ 
   // Atualizar detalhes de uma sala (apenas o ADMIN pode modificar)
   app.put("/rooms/:id", async (request, reply) => {
     const { id } = request.params as { id: string };
@@ -254,4 +203,101 @@ app.post("/rooms/:id/join", async (request, reply) => {
     return reply.status(500).send({ error: "Erro ao tentar entrar na sala" });
   }
 });
+//Listar participantes de uma sala
+app.get("/rooms/:id/members", async (request, reply) => {
+  const { id } = request.params as { id: string };
+
+  try {
+    const members = await prisma.roomUser.findMany({
+      where: { roomId: id },
+      select: {
+        user:{
+          select:{
+            id:true,
+            name:true,
+            profilePicture:true
+          }
+        },
+        role: true,
+      },
+    });
+
+    return reply.send(members);
+  } catch (error) {
+    return reply.status(500).send({ error: "Erro ao listar participantes." });
+  }
+});
+
+//Transferir ADM para outro participante
+app.put("/rooms/:id/transfer-admin", async (request, reply) => {
+  const { id } = request.params as { id: string };
+  const { newAdminId } = request.body as { newAdminId: string };
+  const sessionId = request.cookies.sessionId;
+
+  try {
+    const roomUser = await prisma.roomUser.findFirst({
+      where: { roomId: id, userId: sessionId },
+    });
+
+    if (!roomUser || roomUser.role !== "ADMIN") {
+      return reply.status(403).send({ error: "Apenas o admin pode transferir o cargo." });
+    }
+
+    const newAdmin = await prisma.roomUser.findFirst({
+      where: { roomId: id, userId: newAdminId },
+    });
+
+    if (!newAdmin || newAdmin.role === "ADMIN") {
+      return reply.status(400).send({ error: "Usuário inválido para ser admin." });
+    }
+
+    await prisma.roomUser.update({
+      where: { id: roomUser.id },
+      data: { role: "MEMBER" },
+    });
+
+    await prisma.roomUser.update({
+      where: { id: newAdmin.id },
+      data: { role: "ADMIN" },
+    });
+
+    return reply.send({ message: "Admin transferido com sucesso." });
+  } catch (error) {
+    return reply.status(500).send({ error: "Erro ao transferir administração." });
+  }
+});
+
+//Sair da sala
+app.delete("/rooms/:id/leave", async (request, reply) => {
+  const { id } = request.params as { id: string };
+  const sessionId = request.cookies.sessionId;
+
+  try {
+    const roomUser = await prisma.roomUser.findFirst({
+      where: { roomId: id, userId: sessionId },
+    });
+
+    if (!roomUser) {
+      return reply.status(404).send({ error: "Usuário não está na sala." });
+    }
+
+    // Verifica se o usuário é o admin e se é o único na sala
+    const usersInRoom = await prisma.roomUser.count({ where: { roomId: id } });
+
+    if (roomUser.role === "ADMIN" && usersInRoom === 1) {
+      await prisma.room.delete({ where: { id } });
+      return reply.send({ message: "Sala excluída, pois o único admin saiu." });
+    }
+
+    // Remove o usuário da sala
+    await prisma.roomUser.delete({
+      where: { id: roomUser.id },
+    });
+
+    return reply.send({ message: "Você saiu da sala." });
+  } catch (error) {
+    return reply.status(500).send({ error: "Erro ao sair da sala." });
+  }
+});
+
 }
