@@ -130,7 +130,7 @@ export async function authRoutes(app: FastifyInstance) {
     }
   });
 
-  // Rota de teste para verificar se o cookie está sendo enviado
+  // Rota de teste para verificar se o usuario está ativo
   app.get("/auth/check-session/:id", async (request, reply) => {
     const { id } = request.params as { id: string };
     const sessionId = request.cookies.session;
@@ -138,11 +138,11 @@ export async function authRoutes(app: FastifyInstance) {
     if (!sessionId) {
       return reply.status(401).send({ error: "Usuário não está autenticado" });
     }
-
     if (sessionId !== id) {
       return reply.status(403).send({ error: "Sessão inválida para este usuário" });
     }
 
+    
     const user = await prisma.user.findUnique({
       where: { id },
       select: { id: true, name: true, email: true },

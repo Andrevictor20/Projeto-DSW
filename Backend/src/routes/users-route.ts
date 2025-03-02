@@ -3,6 +3,7 @@ import prisma from "../lib/prisma";
 import { z } from "zod";
 import bcrypt from "bcrypt";
 
+
 export async function userRoutes(app: FastifyInstance) {
   // Schema de validação com Zod
   const userSchema = z.object({

@@ -19,7 +19,6 @@ model User {
   ownedRooms     Room[]        @relation("OwnerToRoom")
   rooms          RoomUser[]
   votes          Vote[]
-  roomRequests   RoomRequest[]
 }
 
 model Room {
@@ -33,7 +32,6 @@ model Room {
   photos          Photo[]
   owner           User          @relation("OwnerToRoom", fields: [ownerId], references: [id], onDelete: Cascade)
   participants    RoomUser[]
-  requests        RoomRequest[]
 }
 
 model RoomUser {
@@ -70,21 +68,9 @@ model Vote {
   @@unique([userId, photoId])
 }
 
-model RoomRequest {
-  id        String        @id @default(uuid())
-  userId    String
-  roomId    String
-  status    RequestStatus @default(PENDING)
-  createdAt DateTime      @default(now())
-  user      User          @relation(fields: [userId], references: [id], onDelete: Cascade)
-  room      Room          @relation(fields: [roomId], references: [id], onDelete: Cascade)
-
-  @@unique([userId, roomId])
-}
 
 enum PrivacyLevel {
   OPEN
-  SEMI_PRIVATE
   PRIVATE
 }
 
@@ -93,8 +79,3 @@ enum UserRole {
   MEMBER
 }
 
-enum RequestStatus {
-  PENDING
-  ACCEPTED
-  REJECTED
-}
