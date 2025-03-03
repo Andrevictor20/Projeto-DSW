@@ -32,6 +32,7 @@ model Room {
   photos          Photo[]
   owner           User          @relation("OwnerToRoom", fields: [ownerId], references: [id], onDelete: Cascade)
   participants    RoomUser[]
+  votes          Vote[] 
 }
 
 model RoomUser {
@@ -60,14 +61,16 @@ model Photo {
 model Vote {
   id        String   @id @default(uuid())
   userId    String
+  roomId    String  
   photoId   String
   createdAt DateTime @default(now())
+
   photo     Photo    @relation(fields: [photoId], references: [id], onDelete: Cascade)
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  room      Room     @relation(fields: [roomId], references: [id], onDelete: Cascade) 
 
-  @@unique([userId, photoId])
+  @@unique([userId, roomId]) 
 }
-
 
 enum PrivacyLevel {
   OPEN
@@ -78,4 +81,3 @@ enum UserRole {
   ADMIN
   MEMBER
 }
-

@@ -300,4 +300,46 @@ app.delete("/rooms/:id/leave", async (request, reply) => {
   }
 });
 
+  // Rota para exibir as fotos mais votadas (do maior para o menor)
+  app.get("/rooms/:roomId/photos/top-voted", async (request, reply) => {
+    const { roomId } = request.params as { roomId: string };
+
+    const topVotedPhotos = await prisma.photo.findMany({
+      where: { roomId },
+      select: {
+        id: true,
+        name: true,
+        filePath: true,
+        _count: {
+          select: { votes: true },
+        },
+      },
+      orderBy: {
+        votes: { _count: "desc" },
+      },
+    });
+
+    return reply.send({ photos: topVotedPhotos });
+  });
+
+  // Rota para exibir as fotos mais recentes (da mais nova para a mais antiga)
+  app.get("/rooms/:roomId/photos/recent", async (request, reply) => {
+    const { roomId } = request.params as { roomId: string };
+
+    const recentPhotos = await prisma.photo.findMany({
+      where: { roomId },
+      select: {
+        id: true,
+        name: true,
+        filePath: true,
+        createdAt: true,
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
+
+    return reply.send({ photos: recentPhotos });
+  });
+
 }
