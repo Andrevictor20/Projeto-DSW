@@ -56,7 +56,7 @@ export async function authRoutes(app: FastifyInstance) {
         },
       });
     } catch (error) {
-      return reply.status(400).send({ error: error.errors });
+      return reply.status(400).send({ error: "Não foi possível realizar o login" });
     }
   });
 
@@ -126,7 +126,7 @@ export async function authRoutes(app: FastifyInstance) {
 
       return reply.send({ message: "Senha redefinida com sucesso" });
     } catch (error) {
-      return reply.status(400).send({ error: error.errors });
+      return reply.status(400).send({ error: "Erro ao redefinir a senha" });
     }
   });
 

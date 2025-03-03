@@ -41,7 +41,7 @@ export async function userRoutes(app: FastifyInstance) {
 
       return reply.status(201).send(newUser);
     } catch (error) {
-      return reply.status(400).send({ error: error.errors });
+      return reply.status(400).send({ error: "Erro ao criar novo usuario" });
     }
   });
 
@@ -94,7 +94,7 @@ export async function userRoutes(app: FastifyInstance) {
 
       return reply.send(updatedUser);
     } catch (error) {
-      return reply.status(400).send({ error: error.errors });
+      return reply.status(400).send({ error: "Erro ao atualizar dados do usuario"});
     }
   });
 

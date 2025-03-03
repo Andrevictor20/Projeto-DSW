@@ -57,7 +57,7 @@ export async function roomsRoutes(app: FastifyInstance) {
 
       return reply.status(201).send({ message: "Sala criada com sucesso!" });
     } catch (error) {
-      return reply.status(400).send({ error: error.errors });
+      return reply.status(400).send({ error: "Erro ao criar a sala" });
     }
   });
 
@@ -124,7 +124,7 @@ export async function roomsRoutes(app: FastifyInstance) {
 
       return reply.send({ message: "Sala atualizada com sucesso!" });
     } catch (error) {
-      return reply.status(400).send({ error: error.errors });
+      return reply.status(400).send({ error: "Erro ao tentar atualizar a sala" });
     }
   });
 
