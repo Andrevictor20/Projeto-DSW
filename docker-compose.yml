@@ -1,13 +1,6 @@
 version: '3.8'
 
 services:
-  frontend:
-    build:
-      context: ./Frontend # Caminho onde está o Dockerfile do frontend
-      dockerfile: Dockerfile
-    ports:
-      - "5600:80" # Mapeia a porta do host para o container
-    restart: always
   db:
     image: postgres:latest
     container_name: postgres_db
@@ -20,6 +13,28 @@ services:
       - "5460:5432"
     volumes:
       - pstg_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ./Backend
+      dockerfile: backend.dockerfile
+    container_name: backend_app
+    restart: always
+    environment:
+      DATABASE_URL: "postgresql://postgres:postgres@db:5432/photo_battle"
+      HOST: "0.0.0.0"
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "5700:5700"
+    volumes:
+      - ./Backend/uploads:/app/uploads
 
 volumes:
   pstg_data:

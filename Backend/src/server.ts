@@ -19,7 +19,7 @@ app.register(authRoutes)
 app.register(roomsRoutes)
 app.register(photoRoutes)
 app.register(voteRoutes)
-app.listen({ port: 5700 }, (err, address) => {
+app.listen({ port: 5700,host:'0.0.0.0' }, (err, address) => {
   if (err) {
     console.error(err);
     process.exit(1);
