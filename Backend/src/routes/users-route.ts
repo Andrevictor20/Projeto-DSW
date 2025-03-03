@@ -109,4 +109,52 @@ export async function userRoutes(app: FastifyInstance) {
       return reply.status(400).send({ error: "Erro ao excluir usuário. Verifique se o ID é válido." });
     }
   });
+  //Salas que o usuario participa
+  app.get("/rooms/user", async (request, reply) => {
+    try {
+        const sessionId = request.cookies.session;
+
+        if (!sessionId) {
+            return reply.status(401).send({ error: "Usuário não autenticado." });
+        }
+
+        // Busca o usuário pelo ID armazenado no cookie
+        const user = await prisma.user.findUnique({
+            where: { id: sessionId },
+            select: { id: true }
+        });
+
+        if (!user) {
+            return reply.status(404).send({ error: "Usuário não encontrado." });
+        }
+
+        // Busca as salas em que o usuário participa
+        const userRooms = await prisma.roomUser.findMany({
+            where: { userId: user.id },
+            include: {
+                room: {
+                    select: {
+                        id: true,
+                        name: true,
+                        maxParticipants: true,
+                        _count: { select: { participants: true } }
+                    }
+                }
+            }
+        });
+
+        const rooms = userRooms.map(roomUser => ({
+            id: roomUser.room.id,
+            name: roomUser.room.name,
+            maxParticipants: roomUser.room.maxParticipants,
+            currentParticipants: roomUser.room._count.participants
+        }));
+
+        return reply.send(rooms);
+    } catch (error) {
+        console.error("Erro ao buscar salas do usuário:", error);
+        return reply.status(500).send({ error: "Erro interno do servidor." });
+    }
+});
+
 }

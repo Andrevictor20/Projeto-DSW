@@ -43,7 +43,7 @@ export async function authRoutes(app: FastifyInstance) {
         path: "/",
         httpOnly: true, // Protege contra acessos via JS no navegador
         secure: process.env.NODE_ENV === "production", // Apenas HTTPS em produção
-        sameSite: "strict",
+        sameSite: "lax",
         maxAge: 60 * 60 * 24 * 7, // Expira em 7 dias
       });
 
@@ -131,30 +131,26 @@ export async function authRoutes(app: FastifyInstance) {
   });
 
   // Rota de teste para verificar se o usuario está ativo
-  app.get("/auth/check-session/:id", async (request, reply) => {
-    const { id } = request.params as { id: string };
+  app.get("/auth/check-session", async (request, reply) => {
     const sessionId = request.cookies.session;
 
     if (!sessionId) {
-      return reply.status(401).send({ error: "Usuário não está autenticado" });
-    }
-    if (sessionId !== id) {
-      return reply.status(403).send({ error: "Sessão inválida para este usuário" });
+        return reply.status(401).send({ error: "Usuário não está autenticado." });
     }
 
-    
     const user = await prisma.user.findUnique({
-      where: { id },
-      select: { id: true, name: true, email: true },
+        where: { id: sessionId },
+        select: { id: true, name: true, email: true },
     });
 
     if (!user) {
-      return reply.status(404).send({ error: "Usuário não encontrado" });
+        return reply.status(404).send({ error: "Usuário não encontrado." });
     }
 
     return reply.send({
-      message: "Usuário autenticado",
-      user,
+        message: "Usuário autenticado.",
+        user,
     });
-  });
+});
+
 }

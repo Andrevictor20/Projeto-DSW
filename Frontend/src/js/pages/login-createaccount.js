@@ -1,66 +1,81 @@
-if (!localStorage.getItem('users')) {
-    localStorage.setItem('users', JSON.stringify([]));
-}
+document.addEventListener("DOMContentLoaded", () => {
 
-function CreateAccount(event) {
-    event.preventDefault();
-    
-    const username = document.getElementById('username').value;
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
-    const confirmPassword = document.getElementById('confirmPassword').value;
-    
-    if (password !== confirmPassword) {
-        alert('As senhas não coincidem!');
-        return;
+    // Formulário de criação de conta
+    const registerForm = document.getElementById("createAccountForm");
+    if (registerForm) {
+        registerForm.addEventListener("submit", async (event) => {
+            event.preventDefault();
+
+            const name = document.getElementById("username").value;
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+            const confirmPassword = document.getElementById("confirmPassword").value;
+
+            if (!name || !email || !password || !confirmPassword) {
+                alert("Todos os campos são obrigatórios!");
+                return;
+            }
+
+            if (password !== confirmPassword) {
+                alert("As senhas não coincidem!");
+                return;
+            }
+
+            try {
+                const response = await fetch("http://localhost:5700/users", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ name, email, password }),
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(data.error || "Erro ao criar conta");
+                }
+
+                alert("Conta criada com sucesso! Agora faça login.");
+                window.location.href = "login.html";
+            } catch (error) {
+                console.error("Erro:", error.message);
+                alert(`Erro: ${error.message}`);
+            }
+        });
     }
-    
-    const users = JSON.parse(localStorage.getItem('users'));
-    const userExists = users.some(user => user.email === email);
-    
-    if (userExists) {
-        alert('Este email já está cadastrado!');
-        return;
+
+    // Formulário de login
+    const loginForm = document.getElementById("loginForm");
+    if (loginForm) {
+        loginForm.addEventListener("submit", async (event) => {
+            event.preventDefault();
+
+            const email = document.getElementById("loginEmail").value;
+            const password = document.getElementById("loginPassword").value;
+
+            if (!email || !password) {
+                alert("Preencha todos os campos!");
+                return;
+            }
+
+            try {
+                const response = await fetch("http://localhost:5700/auth/login", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    credentials: "include", // Importante para enviar cookies com a requisição
+                    body: JSON.stringify({ email, password }),
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(data.error || "Erro ao fazer login");
+                }
+
+                window.location.href = "home.html"; // Redireciona para a página principal
+            } catch (error) {
+                console.error("Erro:", error.message);
+                alert(`Erro: ${error.message}`);
+            }
+        });
     }
-    
-    const newUser = {
-        username,
-        email,
-        password
-    };
-    
-    users.push(newUser);
-    localStorage.setItem('users', JSON.stringify(users));
-    alert('Conta criada com sucesso!');
-    window.location.href = 'login.html';
-}
-
-
-function Login(event) {
-    event.preventDefault();
-    
-    const email = document.querySelector('input[type="email"]').value;
-    const password = document.querySelector('input[type="password"]').value;
-    
-    const users = JSON.parse(localStorage.getItem('users'));
-    const user = users.find(u => u.email === email && u.password === password);
-    
-    if (user) {
-        sessionStorage.setItem('currentUser', JSON.stringify(user));
-        window.location.href = 'home.html';
-    } else {
-        alert('Email ou senha incorretos!');
-    }
-}
-
-const currentPage = window.location.pathname;
-
-if (currentPage.includes('createaccount.html')) {
-    document.querySelector('form').addEventListener('submit', CreateAccount);
-}
-
-if (currentPage.includes('login.html')) {
-    document.querySelector('form').addEventListener('submit', Login);
-}
-
-
+});

@@ -37,7 +37,7 @@
 
 
     <div class="main-container">
-        <h1>Bem vindo(a), User!</h1>
+        <h1 id="welcome-message"></h1>
         <div class="d-flex justify-content-between mt-3">
            <a href="createroom.html" class="text-decoration-none text-white btn-info rounded">Criar uma nova sala</a>
            <a href="entryroom.html" class="text-decoration-none text-white btn-info rounded">Entrar em uma sala</a>
@@ -46,37 +46,11 @@
 
         <hr class="my-4">
         <h2>Minhas salas</h2>
-        <div class="row mt-3">
-            <div class="col d-flex justify-content-center">
-                <a href="room.html" class="text-decoration-none w-100">
-                    <div class="card bg-primary text-white mb-3">
-                        <div class="card-body">
-                            <h5 class="card-title">Sala XXXX</h5>
-                            <p class="card-text">Participantes: 9/10</p>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="col d-flex justify-content-center">
-                <a href="room.html" class="text-decoration-none w-100">
-                    <div class="card bg-primary text-white mb-3">
-                        <div class="card-body">
-                            <h5 class="card-title">Sala YYYY</h5>
-                            <p class="card-text">Participantes: 19/20</p>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="col d-flex justify-content-center">
-                <a href="room.html" class="text-decoration-none w-100">
-                    <div class="card bg-primary text-white mb-3">
-                        <div class="card-body">
-                            <h5 class="card-title">Sala ZZZZ</h5>
-                            <p class="card-text">Participantes: 25/35</p>
-                        </div>
-                    </div>
-                </a>
-            </div>
+        <div id="rooms-container" class="row mt-3">
+            <!-- As salas serão adicionadas dinamicamente aqui -->
+        </div>
+        
+           
         </div>
     </div>
     <footer class="bg-black  text-center text-white mt-4 fixed-bottom">
@@ -94,6 +68,7 @@
             </div>
         </div>
     </footer>
+    <script src="../js/pages/home.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 

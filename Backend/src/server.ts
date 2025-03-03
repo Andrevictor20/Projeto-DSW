@@ -5,10 +5,16 @@ import { roomsRoutes } from './routes/rooms-route';
 import fastifyCookie from "@fastify/cookie";
 import { photoRoutes } from './routes/photo-route';
 import { voteRoutes } from './routes/vote-route';
-
-
-
+import fastifyCors from "@fastify/cors";
 const app = fastify();
+
+
+app.register(fastifyCors, {
+    origin: true, // Permite requisições de qualquer origem (ideal para testes)
+    credentials: true, // Permite cookies e headers autenticados
+});
+
+
 app.register(fastifyCookie, {
   secret: "secret", 
   parseOptions: {},
