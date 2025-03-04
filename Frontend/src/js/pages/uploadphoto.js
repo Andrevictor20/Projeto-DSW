@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
       if (response.ok) {
         alert('Foto enviada com sucesso!');
-        window.location.href = `room.html?roomId=${roomId}`;
+        redirectToRoom();
       } else {
         const error = await response.json();
         alert(error.error || 'Erro ao enviar a foto.');
@@ -77,9 +77,24 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
 
+  const urlParams = new URLSearchParams(window.location.search);
+  const roomId = urlParams.get('roomId');
+
   document.querySelector('.upload-container').addEventListener('click', (event) => {
     if (event.target === previewContainer || event.target === previewImage || event.target === previewContainer.querySelector('.alert')) {
       fileInput.click();
     }
   });
+
+  function redirectToRoom() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const roomId = urlParams.get('roomId');
+    window.location.href = `http://localhost:5500/Frontend/src/pages/room.html?id=${roomId}`;
+  }
+
+  const voltarBtn = document.getElementById('voltarBtn');
+  if (voltarBtn && roomId) {
+    voltarBtn.href = `http://localhost:5500/Frontend/src/pages/room.html?id=${roomId}`;
+  }
+  voltarBtn.addEventListener('click', redirectToRoom);
 });
