@@ -54,23 +54,7 @@ export async function userRoutes(app: FastifyInstance) {
       return reply.status(404).send({ error: "Nenhum usuário encontrado" });
     }
     return reply.send(users);
-    
-  });
 
-  // Obter um usuário por ID
-  app.get("/users/:id", async (request, reply) => {
-    const { id } = request.params as { id: string };
-
-    const user = await prisma.user.findUnique({
-      where: { id },
-      select: { id: true, name: true, email: true, profilePicture: true, bio: true, createdAt: true },
-    });
-
-    if (!user) {
-      return reply.status(404).send({ error: "Usuário não encontrado" });
-    }
-
-    return reply.send(user);
   });
 
   //Atualizar um usuário (apenas nome, bio e foto)
@@ -94,7 +78,7 @@ export async function userRoutes(app: FastifyInstance) {
 
       return reply.send(updatedUser);
     } catch (error) {
-      return reply.status(400).send({ error: "Erro ao atualizar dados do usuario"});
+      return reply.status(400).send({ error: "Erro ao atualizar dados do usuario" });
     }
   });
 
@@ -109,52 +93,212 @@ export async function userRoutes(app: FastifyInstance) {
       return reply.status(400).send({ error: "Erro ao excluir usuário. Verifique se o ID é válido." });
     }
   });
-  //Salas que o usuario participa
+  //Salas que o usuario logado participa
   app.get("/rooms/user", async (request, reply) => {
     try {
-        const sessionId = request.cookies.session;
+      const sessionId = request.cookies.session;
 
-        if (!sessionId) {
-            return reply.status(401).send({ error: "Usuário não autenticado." });
-        }
+      if (!sessionId) {
+        return reply.status(401).send({ error: "Usuário não autenticado." });
+      }
 
-        // Busca o usuário pelo ID armazenado no cookie
-        const user = await prisma.user.findUnique({
-            where: { id: sessionId },
-            select: { id: true }
-        });
+      // Busca o usuário pelo ID armazenado no cookie
+      const user = await prisma.user.findUnique({
+        where: { id: sessionId },
+        select: { id: true }
+      });
 
-        if (!user) {
-            return reply.status(404).send({ error: "Usuário não encontrado." });
-        }
+      if (!user) {
+        return reply.status(404).send({ error: "Usuário não encontrado." });
+      }
 
-        // Busca as salas em que o usuário participa
-        const userRooms = await prisma.roomUser.findMany({
-            where: { userId: user.id },
-            include: {
-                room: {
-                    select: {
-                        id: true,
-                        name: true,
-                        maxParticipants: true,
-                        _count: { select: { participants: true } }
-                    }
-                }
+      // Busca as salas em que o usuário participa
+      const userRooms = await prisma.roomUser.findMany({
+        where: { userId: user.id },
+        include: {
+          room: {
+            select: {
+              id: true,
+              name: true,
+              maxParticipants: true,
+              _count: { select: { participants: true } }
             }
-        });
+          }
+        }
+      });
 
-        const rooms = userRooms.map(roomUser => ({
-            id: roomUser.room.id,
-            name: roomUser.room.name,
-            maxParticipants: roomUser.room.maxParticipants,
-            currentParticipants: roomUser.room._count.participants
-        }));
+      const rooms = userRooms.map(roomUser => ({
+        id: roomUser.room.id,
+        name: roomUser.room.name,
+        maxParticipants: roomUser.room.maxParticipants,
+        currentParticipants: roomUser.room._count.participants
+      }));
 
-        return reply.send(rooms);
+      return reply.send(rooms);
     } catch (error) {
-        console.error("Erro ao buscar salas do usuário:", error);
-        return reply.status(500).send({ error: "Erro interno do servidor." });
+      console.error("Erro ao buscar salas do usuário:", error);
+      return reply.status(500).send({ error: "Erro interno do servidor." });
     }
-});
+  });
+  //Detalhes das salas que um usuario participa
+  app.get('/users/:id/rooms', async (request, reply) => {
+    const { id } = request.params as { id: string };
+
+    try {
+      // 1. Verificar se o usuário existe
+      const userExists = await prisma.user.findUnique({
+        where: { id },
+        select: { id: true }
+      });
+
+      if (!userExists) {
+        return reply.status(404).send({ error: 'Usuário não encontrado' });
+      }
+
+      // 2. Buscar salas com informações completas
+      const rooms = await prisma.room.findMany({
+        where: {
+          participants: {
+            some: {
+              userId: id // Corrigido o filtro para userId
+            }
+          }
+        },
+        select: {
+          id: true,
+          name: true,
+          privacy: true,
+          maxParticipants: true,
+          createdAt: true,
+          owner: {
+            select: {
+              id: true,
+              name: true,
+              profilePicture: true
+            }
+          },
+          participants: {
+            select: {
+              user: {
+                select: {
+                  id: true,
+                  name: true
+                }
+              }
+            }
+          },
+          _count: {
+            select: {
+              participants: true
+            }
+          }
+        },
+        orderBy: {
+          createdAt: 'desc'
+        }
+      });
+
+      // 3. Mapear os dados para o formato de resposta
+      const formattedRooms = rooms.map(room => ({
+        id: room.id,
+        name: room.name,
+        privacy: room.privacy,
+        maxParticipants: room.maxParticipants,
+        createdAt: room.createdAt,
+        currentParticipants: room._count.participants,
+        owner: {
+          id: room.owner.id,
+          name: room.owner.name,
+          avatar: room.owner.profilePicture
+        },
+        participants: room.participants.map(p => ({
+          id: p.user.id,
+          name: p.user.name
+        }))
+      }));
+
+      return reply.send(formattedRooms);
+
+    } catch (error) {
+      console.error('Erro:', error);
+      return reply.status(500).send({
+        error: 'Erro interno ao processar a solicitação',
+        details: error instanceof Error ? error.message : 'Erro desconhecido'
+      });
+    }
+  });
+
+  //Listar salas em comum de 2 usuarios
+  app.get('/users/:id/common-rooms/:otherUserId', async (request, reply) => {
+    const { id, otherUserId } = request.params as { id: string; otherUserId: string };
+
+    try {
+      // Busca as salas onde ambos os usuários são participantes
+      const commonRooms = await prisma.room.findMany({
+        where: {
+          participants: {
+            some: { userId: id },
+          },
+          AND: {
+            participants: {
+              some: { userId: otherUserId },
+            },
+          },
+        },
+        select: {
+          id: true,
+          name: true,
+          privacy: true,
+          maxParticipants: true,
+          participants: {
+            select: { userId: true },
+          },
+        },
+      });
+
+      // Mapeia os dados para incluir o número de participantes
+      const roomsWithParticipants = commonRooms.map((room) => ({
+        id: room.id,
+        name: room.name,
+        privacy: room.privacy,
+        maxParticipants: room.maxParticipants,
+        currentParticipants: room.participants.length,
+      }));
+
+      return reply.send(roomsWithParticipants);
+    } catch (error) {
+      console.error(error);
+      return reply.status(500).send({ error: 'Erro ao buscar salas em comum.' });
+    }
+  });
+
+  //Buscar usuário especifico
+  app.get('/users/:id', async (request, reply) => {
+    const { id } = request.params as { id: string };
+
+    try {
+      const user = await prisma.user.findUnique({
+        where: { id: id },
+        select: {
+          id: true,
+          name: true,
+          email: true,
+          profilePicture: true,
+          bio: true,
+          createdAt: true
+        }
+      });
+
+      if (!user) {
+        return reply.status(404).send({ error: "Usuário não encontrado." });
+      }
+
+      return reply.send(user);
+    } catch (error) {
+      console.error(error);
+      return reply.status(500).send({ error: "Erro ao buscar usuário." });
+    }
+  });
+
 
 }

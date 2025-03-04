@@ -4,11 +4,15 @@ import path from "path";
 import fs from "fs";
 import fastifyMultipart from "@fastify/multipart";
 import fastifyCookie from "@fastify/cookie";
-
+import fastifyStatic from "@fastify/static";
 
 export async function photoRoutes(app: FastifyInstance) {
   app.register(fastifyMultipart);
-   
+  app.register(fastifyStatic, {
+    root: path.join(__dirname, "../../uploads"),
+    prefix: "/uploads/",
+  });
+
   //Upload de fotos (informações salvas no banco de dados e foto na pasta upload)
   app.post("/rooms/:roomId/photos", async (request, reply) => {
     const { roomId } = request.params as { roomId: string };

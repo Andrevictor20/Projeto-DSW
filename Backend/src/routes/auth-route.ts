@@ -135,22 +135,22 @@ export async function authRoutes(app: FastifyInstance) {
     const sessionId = request.cookies.session;
 
     if (!sessionId) {
-        return reply.status(401).send({ error: "Usuário não está autenticado." });
+      return reply.status(401).send({ error: "Usuário não está autenticado." });
     }
 
     const user = await prisma.user.findUnique({
-        where: { id: sessionId },
-        select: { id: true, name: true, email: true },
+      where: { id: sessionId },
+      select: { id: true, name: true, email: true, profilePicture:true, bio:true },
     });
 
     if (!user) {
-        return reply.status(404).send({ error: "Usuário não encontrado." });
+      return reply.status(404).send({ error: "Usuário não encontrado." });
     }
 
     return reply.send({
-        message: "Usuário autenticado.",
-        user,
+      message: "Usuário autenticado.",
+      user,
     });
-});
+  });
 
 }

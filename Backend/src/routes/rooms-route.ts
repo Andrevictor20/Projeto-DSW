@@ -74,6 +74,7 @@ export async function roomsRoutes(app: FastifyInstance) {
         id:true,
         name: true,
         maxParticipants: true,
+        participants:true,
         privacy: true,
       },
     });
@@ -81,6 +82,43 @@ export async function roomsRoutes(app: FastifyInstance) {
     return reply.send(rooms);
   });
  
+  // Buscar sala por ID
+  app.get("/rooms/:id", async (request, reply) => {
+    const { id } = request.params as { id: string };
+
+    try {
+      const room = await prisma.room.findUnique({
+        where: { id },
+        select: {
+          id: true,
+          name: true,
+          maxParticipants: true,
+          privacy: true,
+          participants: {
+            select: {
+              user: {
+                select: {
+                  id: true,
+                  name: true,
+                  email: true
+                }
+              },
+              role: true
+            }
+          }
+        }
+      });
+
+      if (!room) {
+        return reply.status(404).send({ error: "Sala não encontrada" });
+      }
+
+      return reply.send(room);
+    } catch (error) {
+      return reply.status(500).send({ error: "Erro ao buscar sala" });
+    }
+  });
+
   // Atualizar detalhes de uma sala (apenas o ADMIN pode modificar)
   app.put("/rooms/:id", async (request, reply) => {
     const { id } = request.params as { id: string };

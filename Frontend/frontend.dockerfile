@@ -11,7 +11,7 @@ RUN rm -rf ./*
 COPY . .
 
 # Expõe a porta 80 para acessar o frontend
-EXPOSE 80
+EXPOSE 5600
 
 # Comando padrão para rodar o Nginx
 CMD ["nginx", "-g", "daemon off;"]
