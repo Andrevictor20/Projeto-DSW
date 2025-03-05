@@ -1,6 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
   const uploadButton = document.querySelector('.btn-success');
-  const nameInput = document.querySelector('.name-input');
   const fileInput = document.createElement('input');
   fileInput.type = 'file';
   fileInput.accept = 'image/*';
@@ -30,12 +29,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
   uploadButton.addEventListener('click', async () => {
     const file = fileInput.files[0];
-    const name = nameInput.value.trim();
     const urlParams = new URLSearchParams(window.location.search);
     const roomId = urlParams.get('roomId');
 
-    if (!file || !name) {
-      alert('Por favor, selecione uma foto e insira um nome.');
+    if (!file) {
+      alert('Por favor, selecione uma foto.');
       return;
     }
 
@@ -46,7 +44,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const formData = new FormData();
     formData.append('file', file);
-    formData.append('name', name);
 
     // Adicionar indicador de carregamento
     uploadButton.disabled = true;
@@ -57,7 +54,10 @@ document.addEventListener('DOMContentLoaded', function() {
         method: 'POST',
         body: formData,
         credentials: 'include',
-        timeout: 30000 // Aumentar o timeout para 30 segundos
+        headers: {
+          'Content-Length': file.size
+        },
+        timeout: 30000
       });
 
       if (response.ok) {

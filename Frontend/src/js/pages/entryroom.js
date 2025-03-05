@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                   <div class="room-info d-flex gap-2">
                       <span class="bg-light text-dark p-2 rounded">Participantes ${currentParticipants}/${room.maxParticipants}</span>
                       <span class="bg-light text-dark p-2 rounded">Status: Aberta</span>
-                      <a class="btn btn-info btn-sm" href="room.html?id=${room.id}">Entrar</a>
+                      <a class="btn btn-info btn-sm" onclick="enterOpenRoom('${room.id}')">Entrar</a>
                   </div>
               `;
           } else {
@@ -75,10 +75,9 @@ async function enterPrivateRoom(roomId) {
           body: JSON.stringify({ password })
       });
 
-      const data = await response.json();
-
       if (!response.ok) {
-          throw new Error(data.error || "Senha incorreta.");
+          const errorData = await response.json();
+          throw new Error(errorData.error || "Erro ao entrar na sala");
       }
 
       // Redireciona para a sala caso a senha esteja correta
@@ -86,5 +85,29 @@ async function enterPrivateRoom(roomId) {
   } catch (error) {
       alert(error.message);
       passwordInput.value = "";
+  }
+}
+
+// Função para entrar em sala aberta
+async function enterOpenRoom(roomId) {
+  try {
+    const response = await fetch(`http://localhost:5700/rooms/${roomId}/join`, {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({})
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.error || "Erro ao entrar na sala");
+    }
+
+    // Redireciona para a sala
+    window.location.href = `room.html?id=${roomId}`;
+  } catch (error) {
+    alert(error.message);
   }
 }

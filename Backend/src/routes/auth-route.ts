@@ -41,6 +41,7 @@ export async function authRoutes(app: FastifyInstance) {
       // Define um cookie de sessão para manter o usuário logado
       reply.setCookie("session", user.id, {
         path: "/",
+        domain: "localhost", // Permite que o cookie seja válido para todos os subdomínios
         httpOnly: true, // Protege contra acessos via JS no navegador
         secure: process.env.NODE_ENV === "production", // Apenas HTTPS em produção
         sameSite: "lax",
