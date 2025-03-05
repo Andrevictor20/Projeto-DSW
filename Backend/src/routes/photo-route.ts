@@ -186,6 +186,34 @@ export async function photoRoutes(app: FastifyInstance) {
 
     return reply.send({ message: "Foto deletada com sucesso!" });
   });
-  
 
+  //Buscar foto específica pelo ID
+  app.get('/photos/:id', async (request, reply) => {
+    const { id } = request.params as { id: string };
+
+    const photo = await prisma.photo.findUnique({
+      where: { id },
+      include: {
+        user: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
+            profilePicture: true
+          }
+        }
+      }
+    });
+
+    if (!photo) {
+      return reply.status(404).send({ error: 'Foto não encontrada.' });
+    }
+
+    return reply.send({
+      id: photo.id,
+      name: photo.name,
+      filePath: photo.filePath,
+      user: photo.user
+    });
+  });
 }

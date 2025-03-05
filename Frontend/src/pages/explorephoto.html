@@ -35,12 +35,12 @@
         <div class="user-info text-center my-4 d-flex justify-content-between align-items-center">
             <div class="d-flex align-items-center">
                 <div class="small-profile-pic"></div>
-                <h1 class="text-left ml-2">Árvore de natal</h1>
+                <h1 class="text-left ml-2"></h1>
             </div>
-            <a href="room.html" class="btn btn-secondary text-decoration-none text-white rounded">VOLTAR</a>
+            <a id="voltarBtn" href="" class="btn btn-secondary text-decoration-none text-white rounded">VOLTAR</a>
         </div>
         <div class="photo-container bg-black rounded d-flex align-items-center justify-content-center">
-            <img src="../assets/images/image1.jpeg" alt="Árvore de Natal" class="photo">
+            <img src="" alt="" class="photo">
         </div>
         <div class="vote-section text-center my-4">
             <div class="d-flex flex-column align-items-center">
@@ -49,10 +49,10 @@
             </div>
         </div>
     </main>
-    <footer class="bg-black  text-center text-white mt-4>
+    <footer class="bg-black  text-center text-white mt-4">
         <div class="container p-4">
             <div class="text-center">
-                <span>© 2025, Photo Battle</span>
+                <span> 2025, Photo Battle</span>
             </div>
             <div class="text-center">
                 <a href="#" class="me-4 text-reset">Github
@@ -64,7 +64,11 @@
             </div>
         </div>
     </footer>
-    
+    <script src="../js/pages/explorephoto.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script>
+        const roomId = new URLSearchParams(window.location.search).get('roomId');
+        document.getElementById('voltarBtn').href = `room.html?roomId=${roomId}`;
+    </script>
 </body>
 </html>

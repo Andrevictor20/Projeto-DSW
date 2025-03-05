@@ -47,7 +47,7 @@ async function createCompetitorBoxes(roomId) {
             competitorBox.className = 'competitor-box text-white';
             const imagePath = '/Backend/' + photo.filePath;
             competitorBox.innerHTML = `
-                <a href="explorephoto.html">
+                <a href="explorephoto.html?id=${photo.id}&roomId=${roomId}">
                     <img src="${imagePath}" alt="Descrição da foto" class="competitor-image">
                 </a>
                 <div class="vote-count">Votos: 0</div>
