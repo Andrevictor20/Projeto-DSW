@@ -1,3 +1,5 @@
+const API_BASE_URL = "http://localhost:5700";
+
 document.addEventListener("DOMContentLoaded", async () => {
   const urlParams = new URLSearchParams(window.location.search);
   const roomId = urlParams.get("roomId");
@@ -12,7 +14,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   document.querySelector(".btn-secondary").href = `room.html?id=${roomId}`;
 
   try {
-      const sessionResponse = await fetch("http://localhost:5700/auth/check-session", {
+      const sessionResponse = await fetch(`${API_BASE_URL}/auth/check-session`, {
           credentials: "include" 
       });
 
@@ -28,7 +30,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       const loggedUserId = sessionData.user.id;
       console.log("ID do usuário logado:", loggedUserId);
 
-      const roomResponse = await fetch(`http://localhost:5700/rooms/${roomId}`, {
+      const roomResponse = await fetch(`${API_BASE_URL}/rooms/${roomId}`, {
           credentials: "include"
       });
 
@@ -41,7 +43,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
       document.querySelector("h1").textContent = `Participantes de ${roomData.name}`;
 
-      const membersResponse = await fetch(`http://localhost:5700/rooms/${roomId}/members`, {
+      const membersResponse = await fetch(`${API_BASE_URL}/rooms/${roomId}/members`, {
           credentials: "include" 
       });
 

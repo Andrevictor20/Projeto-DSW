@@ -1,3 +1,4 @@
+const API_BASE_URL = "http://localhost:5700";
 document.addEventListener("DOMContentLoaded", () => {
     const registerForm = document.getElementById("createAccountForm");
     if (registerForm) {
@@ -20,7 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             try {
-                const response = await fetch("http://localhost:5700/users", {
+                const response = await fetch(`${API_BASE_URL}/users`, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ name, email, password }),
@@ -55,7 +56,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             try {
-                const response = await fetch("http://localhost:5700/auth/login", {
+                const response = await fetch(`${API_BASE_URL}/auth/login`, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     credentials: "include", 

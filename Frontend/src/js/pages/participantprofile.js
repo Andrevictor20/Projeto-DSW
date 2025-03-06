@@ -1,3 +1,5 @@
+const API_BASE_URL = "http://localhost:5700";
+
 document.addEventListener("DOMContentLoaded", async () => {
   const urlParams = new URLSearchParams(window.location.search);
   const userId = urlParams.get('id');
@@ -10,7 +12,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   try {
-      const userResponse = await fetch(`http://localhost:5700/users/${userId}`);
+      const userResponse = await fetch(`${API_BASE_URL}/users/${userId}`);
       const user = await userResponse.json();
 
       const profilePic = document.querySelector(".big-profile-pic");
@@ -18,7 +20,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       document.querySelector("h2").textContent = user.name;
       document.querySelector("p").textContent = user.bio || "Sem biografia disponível";
 
-      const roomsResponse = await fetch(`http://localhost:5700/users/${userId}/rooms`);
+      const roomsResponse = await fetch(`${API_BASE_URL}/users/${userId}/rooms`);
       const rooms = await roomsResponse.json();
 
       roomsContainer.innerHTML = "";

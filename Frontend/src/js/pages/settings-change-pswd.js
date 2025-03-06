@@ -1,3 +1,5 @@
+const API_BASE_URL = "http://localhost:5700";
+
 document.addEventListener("DOMContentLoaded", async () => {
   const form = document.querySelector("#changePassword form");
 
@@ -19,7 +21,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       }
 
       try {
-          const sessionResponse = await fetch("http://localhost:5700/auth/check-session", {
+          const sessionResponse = await fetch(`${API_BASE_URL}/auth/check-session`, {
               method: "GET",
               credentials: "include"
           });
@@ -35,7 +37,7 @@ document.addEventListener("DOMContentLoaded", async () => {
               throw new Error("Email do usuário não encontrado.");
           }
 
-          const response = await fetch("http://localhost:5700/auth/reset-password", {
+          const response = await fetch(`${API_BASE_URL}/auth/reset-password`, {
               method: "POST",
               headers: {
                   "Content-Type": "application/json"

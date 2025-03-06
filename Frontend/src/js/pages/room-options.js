@@ -1,3 +1,4 @@
+const API_BASE_URL = "http://localhost:5700";
 document.addEventListener('DOMContentLoaded', function () {
   const dropdownToggle = document.getElementById('optionsDropdown');
   const dropdownMenu = dropdownToggle.nextElementSibling;
@@ -20,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   function leaveRoom(roomId) {
-    fetch(`http://localhost:5700/rooms/${roomId}/members`, {
+    fetch(`${API_BASE_URL}/rooms/${roomId}/members`, {
       method: 'GET',
       credentials: 'include'
     })
@@ -40,14 +41,14 @@ document.addEventListener('DOMContentLoaded', function () {
       }
 
       if (currentUser.role === 'MEMBER') {
-        fetch(`http://localhost:5700/rooms/${roomId}/leave`, {
+        fetch(`${API_BASE_URL}/rooms/${roomId}/leave`, {
           method: 'DELETE',
           credentials: 'include'
         })
         .then(response => {
           if (response.ok) {
             alert('Você saiu da sala com sucesso.');
-            fetch('http://localhost:5700/rooms/user', {
+            fetch(`${API_BASE_URL}/rooms/user`, {
               credentials: 'include'
             })
             .then(response => response.json())
@@ -77,7 +78,7 @@ document.addEventListener('DOMContentLoaded', function () {
   async function deleteRoom(roomId) {
     try {
         console.log(`Tentando excluir a sala com ID: ${roomId}`);
-        const membersResponse = await fetch(`http://localhost:5700/rooms/${roomId}/members`, {
+        const membersResponse = await fetch(`${API_BASE_URL}/rooms/${roomId}/members`, {
             method: 'GET',
             credentials: 'include'
         });
@@ -91,7 +92,7 @@ document.addEventListener('DOMContentLoaded', function () {
             return;
         }
 
-        const response = await fetch(`http://localhost:5700/rooms/${roomId}`, {
+        const response = await fetch(`${API_BASE_URL}/rooms/${roomId}`, {
             method: 'DELETE',
             credentials: 'include'
         });

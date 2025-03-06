@@ -1,3 +1,5 @@
+const API_BASE_URL = "http://localhost:5700";
+
 document.addEventListener('DOMContentLoaded', async () => {
   const urlParams = new URLSearchParams(window.location.search);
   const photoId = urlParams.get('id');
@@ -11,8 +13,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   try {
     const [photoResponse, votesResponse] = await Promise.all([
-      fetch(`http://localhost:5700/photos/${photoId}`),
-      fetch(`http://localhost:5700/rooms/${roomId}/photos/votes`)
+      fetch(`${API_BASE_URL}/photos/${photoId}`),
+      fetch(`${API_BASE_URL}/rooms/${roomId}/photos/votes`)
     ]);
 
     const photoData = await photoResponse.json();
@@ -39,7 +41,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       };
     }
 
-    document.querySelector('.photo').src = `http://localhost:5700/${photo.filePath}`;
+    document.querySelector('.photo').src = `${API_BASE_URL}/${photo.filePath}`;
     document.querySelector('.small-profile-pic').style.backgroundImage = `url('${photo.user.profilePic || '/images/default-profile.jpg'}')`;
     document.querySelector('h1').textContent = photo.user.name;
     document.querySelector('.vote-section span').textContent = `Votos: ${photoWithVotes?._count?.votes || 0}`;

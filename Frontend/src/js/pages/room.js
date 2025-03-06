@@ -1,6 +1,8 @@
+const API_BASE_URL = "http://localhost:5700";
+
 async function checkSession() {
     try {
-        const response = await fetch('http://localhost:5700/auth/check-session', {
+        const response = await fetch(`${API_BASE_URL}/auth/check-session`, {
             method: 'GET',
             credentials: 'include'
         });
@@ -20,10 +22,10 @@ async function createCompetitorBoxes(roomId) {
         await checkSession();
 
         const [photosResponse, userVotesResponse] = await Promise.all([
-            fetch(`http://localhost:5700/rooms/${roomId}/photos/votes`, {
+            fetch(`${API_BASE_URL}/rooms/${roomId}/photos/votes`, {
                 credentials: 'include'
             }),
-            fetch(`http://localhost:5700/rooms/${roomId}/user-votes`, {
+            fetch(`${API_BASE_URL}/rooms/${roomId}/user-votes`, {
                 credentials: 'include'
             })
         ]);
@@ -45,7 +47,7 @@ async function createCompetitorBoxes(roomId) {
         photos.forEach((photo) => {
             const competitorBox = document.createElement('div');
             competitorBox.className = 'competitor-box text-white';
-            const imagePath = `http://localhost:5700/${photo.filePath}`;
+            const imagePath = `${API_BASE_URL}/${photo.filePath}`;
             const hasVoted = userVotes.includes(photo.id);
             competitorBox.innerHTML = `
                 <div class="photo-container">
@@ -82,7 +84,7 @@ function updateVoteCount(photoId, increment = true) {
 
 async function vote(roomId, photoId) {
     try {
-        const response = await fetch(`http://localhost:5700/rooms/${roomId}/vote/${photoId}`, {
+        const response = await fetch(`${API_BASE_URL}/rooms/${roomId}/vote/${photoId}`, {
             method: 'POST',
             credentials: 'include',
             headers: {
@@ -173,7 +175,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     if (roomId) {
         try {
-            const response = await fetch(`http://localhost:5700/rooms/${roomId}`);
+            const response = await fetch(`${API_BASE_URL}/rooms/${roomId}`);
             if (!response.ok) {
                 throw new Error('Sala não encontrada');
             }

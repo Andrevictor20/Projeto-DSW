@@ -1,6 +1,8 @@
+const API_BASE_URL = "http://localhost:5700";
+
 document.addEventListener("DOMContentLoaded", async () => {
   try {
-      const sessionResponse = await fetch("http://localhost:5700/auth/check-session", {
+      const sessionResponse = await fetch(`${API_BASE_URL}/auth/check-session`, {
           method: "GET",
           credentials: "include"
       });
@@ -18,7 +20,7 @@ document.addEventListener("DOMContentLoaded", async () => {
           welcomeMessage.textContent = "Bem vindo(a)!";
       }
 
-      const roomsResponse = await fetch("http://localhost:5700/rooms/user", {
+      const roomsResponse = await fetch(`${API_BASE_URL}/rooms/user`, {
           method: "GET",
           credentials: "include"
       });

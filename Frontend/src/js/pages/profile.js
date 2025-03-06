@@ -1,10 +1,12 @@
+const API_BASE_URL = "http://localhost:5700";
+
 document.addEventListener("DOMContentLoaded", async () => {
   const profilePic = document.querySelector(".big-profile-pic");
   const profileName = document.querySelector(".profile-card h2");
   const profileBio = document.querySelector(".profile-card p");
 
   try {
-      const response = await fetch("http://localhost:5700/auth/check-session", {
+      const response = await fetch(`${API_BASE_URL}/auth/check-session`, {
           method: "GET",
           credentials: "include"
       });
@@ -29,7 +31,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 async function logout() {
   try {
-      const response = await fetch("http://localhost:5700/auth/logout", {
+      const response = await fetch(`${API_BASE_URL}/auth/logout`, {
           method: "POST",
           credentials: "include"
       });
@@ -44,7 +46,7 @@ async function logout() {
 
 async function fetchAndDisplayUserPhotos() {
     try {
-        const sessionResponse = await fetch('http://localhost:5700/auth/check-session', {
+        const sessionResponse = await fetch(`${API_BASE_URL}/auth/check-session`, {
             method: 'GET',
             credentials: 'include'
         });
@@ -54,7 +56,7 @@ async function fetchAndDisplayUserPhotos() {
         const sessionData = await sessionResponse.json();
         const userId = sessionData.user.id;
 
-        const response = await fetch(`http://localhost:5700/users/${userId}/photos`, {
+        const response = await fetch(`${API_BASE_URL}/users/${userId}/photos`, {
             method: 'GET',
             credentials: 'include'
         });
@@ -79,7 +81,7 @@ async function fetchAndDisplayUserPhotos() {
             const photoCol = document.createElement('div');
             photoCol.className = 'col-md-4 mb-4';
             photoCol.innerHTML = `
-                <img src="http://localhost:5700/${photo.filePath}" alt="${photo.name}" class="img-fluid rounded mx-auto d-block" style="margin: 10px;">
+                <img src="${API_BASE_URL}/${photo.filePath}" alt="${photo.name}" class="img-fluid rounded mx-auto d-block" style="margin: 10px;">
             `;
             photoContainer.querySelector('.row').appendChild(photoCol);
         });
