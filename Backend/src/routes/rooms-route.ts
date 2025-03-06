@@ -5,7 +5,6 @@ import bcrypt from "bcrypt";
 import fastifyCookie from "@fastify/cookie";
 
 export async function roomsRoutes(app: FastifyInstance) {
-  // Schema de validação para criação de salas
   const createRoomSchema = z.object({
     name: z.string(),
     privacy: z.enum(["OPEN", "PRIVATE"]),
@@ -266,45 +265,6 @@ app.get("/rooms/:id/members", async (request, reply) => {
   }
 });
 
-//Transferir ADM para outro participante
-app.put("/rooms/:id/transfer-admin", async (request, reply) => {
-  const { id } = request.params as { id: string };
-  const { newAdminId } = request.body as { newAdminId: string };
-  const sessionId = request.cookies.sessionId;
-
-  try {
-    const roomUser = await prisma.roomUser.findFirst({
-      where: { roomId: id, userId: sessionId },
-    });
-
-    if (!roomUser || roomUser.role !== "ADMIN") {
-      return reply.status(403).send({ error: "Apenas o admin pode transferir o cargo." });
-    }
-
-    const newAdmin = await prisma.roomUser.findFirst({
-      where: { roomId: id, userId: newAdminId },
-    });
-
-    if (!newAdmin || newAdmin.role === "ADMIN") {
-      return reply.status(400).send({ error: "Usuário inválido para ser admin." });
-    }
-
-    await prisma.roomUser.update({
-      where: { id: roomUser.id },
-      data: { role: "MEMBER" },
-    });
-
-    await prisma.roomUser.update({
-      where: { id: newAdmin.id },
-      data: { role: "ADMIN" },
-    });
-
-    return reply.send({ message: "Admin transferido com sucesso." });
-  } catch (error) {
-    return reply.status(500).send({ error: "Erro ao transferir administração." });
-  }
-});
-
 //Sair da sala
 app.delete("/rooms/:id/leave", async (request, reply) => {
   const { id } = request.params as { id: string };
@@ -338,46 +298,5 @@ app.delete("/rooms/:id/leave", async (request, reply) => {
   }
 });
 
-  // Rota para exibir as fotos mais votadas (do maior para o menor)
-  app.get("/rooms/:roomId/photos/top-voted", async (request, reply) => {
-    const { roomId } = request.params as { roomId: string };
-
-    const topVotedPhotos = await prisma.photo.findMany({
-      where: { roomId },
-      select: {
-        id: true,
-        name: true,
-        filePath: true,
-        _count: {
-          select: { votes: true },
-        },
-      },
-      orderBy: {
-        votes: { _count: "desc" },
-      },
-    });
-
-    return reply.send({ photos: topVotedPhotos });
-  });
-
-  // Rota para exibir as fotos mais recentes (da mais nova para a mais antiga)
-  app.get("/rooms/:roomId/photos/recent", async (request, reply) => {
-    const { roomId } = request.params as { roomId: string };
-
-    const recentPhotos = await prisma.photo.findMany({
-      where: { roomId },
-      select: {
-        id: true,
-        name: true,
-        filePath: true,
-        createdAt: true,
-      },
-      orderBy: {
-        createdAt: "desc",
-      },
-    });
-
-    return reply.send({ photos: recentPhotos });
-  });
 
 }

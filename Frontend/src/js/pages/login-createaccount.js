@@ -1,6 +1,4 @@
 document.addEventListener("DOMContentLoaded", () => {
-
-    // Formulário de criação de conta
     const registerForm = document.getElementById("createAccountForm");
     if (registerForm) {
         registerForm.addEventListener("submit", async (event) => {
@@ -43,7 +41,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // Formulário de login
     const loginForm = document.getElementById("loginForm");
     if (loginForm) {
         loginForm.addEventListener("submit", async (event) => {
@@ -61,7 +58,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 const response = await fetch("http://localhost:5700/auth/login", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
-                    credentials: "include", // Importante para enviar cookies com a requisição
+                    credentials: "include", 
                     body: JSON.stringify({ email, password }),
                 });
 
@@ -71,7 +68,13 @@ document.addEventListener("DOMContentLoaded", () => {
                     throw new Error(data.error || "Erro ao fazer login");
                 }
 
-                window.location.href = "home.html"; // Redireciona para a página principal
+                if (!data.user?.id) {
+                    throw new Error("ID do usuário não foi retornado");
+                }
+
+                window.localStorage.setItem('userId', data.user.id);
+
+                window.location.href = "home.html"; 
             } catch (error) {
                 console.error("Erro:", error.message);
                 alert(`Erro: ${error.message}`);

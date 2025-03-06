@@ -19,7 +19,6 @@ async function createCompetitorBoxes(roomId) {
     try {
         await checkSession();
 
-        // Busca as fotos e a contagem de votos
         const [photosResponse, userVotesResponse] = await Promise.all([
             fetch(`http://localhost:5700/rooms/${roomId}/photos/votes`, {
                 credentials: 'include'
@@ -41,32 +40,27 @@ async function createCompetitorBoxes(roomId) {
         const photos = photosData.photos;
         const userVotes = userVotesData.votes;
 
-        // Clear existing content before adding new photos
         container.innerHTML = '';
 
         photos.forEach((photo) => {
             const competitorBox = document.createElement('div');
             competitorBox.className = 'competitor-box text-white';
-            const imagePath = '/Backend/' + photo.filePath;
+            const imagePath = `http://localhost:5700/${photo.filePath}`;
             const hasVoted = userVotes.includes(photo.id);
             competitorBox.innerHTML = `
-                <a href="explorephoto.html?id=${photo.id}&roomId=${roomId}">
-                    <img src="${imagePath}" alt="Descrição da foto" class="competitor-image">
-                </a>
-                <div class="vote-count" data-photo-id="${photo.id}">Votos: ${photo._count.votes}</div>
-                <div class="d-flex justify-content-between">
-                    <button class="btn btn-light btn-vote" data-photo-id="${photo.id}" ${hasVoted ? 'disabled' : ''}>${hasVoted ? 'Votado' : 'VOTAR'}</button>
+                <div class="photo-container">
+                    <a href="explorephoto.html?id=${photo.id}&roomId=${roomId}">
+                        <img src="${imagePath}" alt="Foto" class="competitor-image">
+                    </a>
+                    <div class="photo-info d-flex flex-column align-items-center">
+                        <div class="vote-count" data-photo-id="${photo.id}">Votos: ${photo._count.votes}</div>
+                        <button class="btn ${hasVoted ? 'btn-secondary' : 'btn-light'} btn-vote" data-photo-id="${photo.id}" ${hasVoted ? 'disabled' : ''}>${hasVoted ? 'Votado' : 'VOTAR'}</button>
+                    </div>
                 </div>
             `;
-            if (hasVoted) {
-                const voteButton = competitorBox.querySelector('.btn-vote');
-                voteButton.classList.add('btn-secondary');
-                voteButton.classList.remove('btn-light');
-            }
             container.appendChild(competitorBox);
         });
 
-        // Add event listeners to vote buttons after creating the boxes
         setupVoteEventListeners(roomId);
     } catch (error) {
         console.error('Erro ao buscar fotos:', error);
@@ -86,7 +80,6 @@ function updateVoteCount(photoId, increment = true) {
     }
 }
 
-// Função para votar em uma foto
 async function vote(roomId, photoId) {
     try {
         const response = await fetch(`http://localhost:5700/rooms/${roomId}/vote/${photoId}`, {
@@ -144,7 +137,6 @@ function setupVoteEventListeners(roomId) {
             event.target.textContent = 'Processando...';
             
             try {
-                // Remover o voto anterior antes de criar um novo
                 const previousVoteButton = document.querySelector('.btn-vote:not([data-photo-id="' + photoId + '"])');
                 if (previousVoteButton && previousVoteButton.classList.contains('btn-secondary')) {
                     previousVoteButton.disabled = false;
@@ -157,7 +149,6 @@ function setupVoteEventListeners(roomId) {
                 const data = await vote(roomId, photoId);
                 updateVoteCount(photoId);
 
-                // Disable the button after voting
                 event.target.disabled = true;
                 event.target.classList.add('btn-secondary');
                 event.target.classList.remove('btn-light');
@@ -182,14 +173,12 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     if (roomId) {
         try {
-            // Busca os detalhes da sala na API
             const response = await fetch(`http://localhost:5700/rooms/${roomId}`);
             if (!response.ok) {
                 throw new Error('Sala não encontrada');
             }
             const roomData = await response.json();
 
-            // Atualiza o título da sala com o nome real
             const welcomeTitle = document.querySelector('h1.text-white');
             if (welcomeTitle) {
                 welcomeTitle.textContent = `Bem vindo à sala ${roomData.name}!`;
@@ -206,7 +195,6 @@ document.addEventListener("DOMContentLoaded", async () => {
             }
         } catch (error) {
             console.error('Erro ao buscar detalhes da sala:', error);
-            // Em caso de erro, mostra o ID da sala como fallback
             const welcomeTitle = document.querySelector('h1.text-white');
             if (welcomeTitle) {
                 welcomeTitle.textContent = `Bem vindo à sala ${roomId}!`;
@@ -226,4 +214,20 @@ document.addEventListener('DOMContentLoaded', function() {
             uploadPhotoLink.href = `uploadphoto.html?roomId=${roomId}`;
         }
     }
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('deleteRoomButton').addEventListener('click', () => {
+        const roomId = window.location.pathname.split('/').pop();
+        if (confirm('Tem certeza que deseja excluir esta sala? Esta ação não pode ser desfeita.')) {
+        }
+    });
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelector('.dropdown-item[href="#"]').addEventListener('click', () => {
+        const roomId = window.location.pathname.split('/').pop();
+        if (confirm('Tem certeza que deseja excluir esta sala? Esta ação não pode ser desfeita.')) {
+        }
+    });
 });

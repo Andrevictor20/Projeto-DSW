@@ -7,7 +7,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   let userId = null;
 
   try {
-      // Obtém os dados do usuário logado
       const response = await fetch("http://localhost:5700/auth/check-session", {
           method: "GET",
           credentials: "include"
@@ -16,12 +15,10 @@ document.addEventListener("DOMContentLoaded", async () => {
       if (!response.ok) throw new Error("Erro ao buscar perfil.");
 
       const userData = await response.json();
-      console.log("Dados do usuário:", userData); // Depuração
 
       const user = userData.user || userData; 
-      userId = user.id; // Guarda o ID do usuário para edição
+      userId = user.id;
 
-      // Preenche os campos com os dados do usuário
       profilePic.style.backgroundImage = `url('${user.profilePicture || 'default-avatar.png'}')`;
       usernameInput.value = user.name || "";
       bioInput.value = user.bio || "";
@@ -30,9 +27,8 @@ document.addEventListener("DOMContentLoaded", async () => {
       console.error("Erro ao carregar perfil:", error.message);
   }
 
-  // Evento para salvar as alterações do perfil
   form.addEventListener("submit", async (event) => {
-      event.preventDefault(); // Evita o recarregamento da página
+      event.preventDefault(); 
 
       if (!userId) {
           alert("Usuário não identificado.");

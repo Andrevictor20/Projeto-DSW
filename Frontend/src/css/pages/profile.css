@@ -36,6 +36,8 @@
     margin-bottom: 20px;
     margin-left: 20px;
     margin-right: 20px;
+    min-height: 80vh;
+
   }
 
   .image-placeholder {
@@ -56,4 +58,15 @@
 .carousel-control-next-icon {
     background-color: #000000;
     border-radius: 50%;
+}
+
+.photo-container .col-md-4 {
+    padding: 10px;
+}
+
+.photo-container img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }

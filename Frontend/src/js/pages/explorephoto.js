@@ -39,7 +39,6 @@ document.addEventListener('DOMContentLoaded', async () => {
       };
     }
 
-    // Preencher os elementos HTML com os dados da foto
     document.querySelector('.photo').src = `http://localhost:5700/${photo.filePath}`;
     document.querySelector('.small-profile-pic').style.backgroundImage = `url('${photo.user.profilePic || '/images/default-profile.jpg'}')`;
     document.querySelector('h1').textContent = photo.user.name;
@@ -53,7 +52,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const urlParams = new URLSearchParams(window.location.search);
     const roomId = urlParams.get('roomId');
     if (roomId) {
-      window.location.href = `http://localhost:5500/Frontend/src/pages/room.html?id=${roomId}`;
+      window.location.href = `http://localhost:5600/src/pages/room.html?id=${roomId}`;
     } else {
       alert('Sala não encontrada. Certifique-se de que você está acessando a página corretamente.');
     }
@@ -64,7 +63,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const urlParams = new URLSearchParams(window.location.search);
     const roomId = urlParams.get('roomId');
     if (roomId) {
-      voltarBtn.href = `http://localhost:5500/Frontend/src/pages/room.html?id=${roomId}`;
+      voltarBtn.href = `http://localhost:5600/src/pages/room.html?id=${roomId}`;
     }
     voltarBtn.addEventListener('click', redirectToRoom);
   }

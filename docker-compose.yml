@@ -36,5 +36,16 @@ services:
     volumes:
       - ./Backend/uploads:/app/uploads
 
+  frontend:
+    build:
+      context: ./Frontend
+      dockerfile: frontend.dockerfile
+    container_name: frontend_app
+    restart: always
+    ports:
+      - "5600:80"
+    environment:
+      HOST: "0.0.0.0"
+
 volumes:
   pstg_data:

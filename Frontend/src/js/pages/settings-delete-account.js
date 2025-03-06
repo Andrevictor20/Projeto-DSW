@@ -12,7 +12,6 @@ document.addEventListener("DOMContentLoaded", async () => {
       }
 
       try {
-          // Obtém os dados do usuário logado para pegar o ID
           const sessionResponse = await fetch("http://localhost:5700/auth/check-session", {
               method: "GET",
               credentials: "include"
@@ -29,12 +28,10 @@ document.addEventListener("DOMContentLoaded", async () => {
               throw new Error("ID do usuário não encontrado.");
           }
 
-          // Confirmação do usuário antes de apagar a conta
           if (!confirm("Tem certeza que deseja apagar sua conta? Esta ação é irreversível!")) {
               return;
           }
 
-          // Envia a requisição para deletar a conta
           const response = await fetch(`http://localhost:5700/users/${userId}`, {
               method: "DELETE",
               headers: {

@@ -5,7 +5,6 @@ import bcrypt from "bcrypt";
 
 
 export async function userRoutes(app: FastifyInstance) {
-  // Schema de validação com Zod
   const userSchema = z.object({
     name: z.string(),
     email: z.string().email("E-mail inválido"),
@@ -225,50 +224,6 @@ export async function userRoutes(app: FastifyInstance) {
         error: 'Erro interno ao processar a solicitação',
         details: error instanceof Error ? error.message : 'Erro desconhecido'
       });
-    }
-  });
-
-  //Listar salas em comum de 2 usuarios
-  app.get('/users/:id/common-rooms/:otherUserId', async (request, reply) => {
-    const { id, otherUserId } = request.params as { id: string; otherUserId: string };
-
-    try {
-      // Busca as salas onde ambos os usuários são participantes
-      const commonRooms = await prisma.room.findMany({
-        where: {
-          participants: {
-            some: { userId: id },
-          },
-          AND: {
-            participants: {
-              some: { userId: otherUserId },
-            },
-          },
-        },
-        select: {
-          id: true,
-          name: true,
-          privacy: true,
-          maxParticipants: true,
-          participants: {
-            select: { userId: true },
-          },
-        },
-      });
-
-      // Mapeia os dados para incluir o número de participantes
-      const roomsWithParticipants = commonRooms.map((room) => ({
-        id: room.id,
-        name: room.name,
-        privacy: room.privacy,
-        maxParticipants: room.maxParticipants,
-        currentParticipants: room.participants.length,
-      }));
-
-      return reply.send(roomsWithParticipants);
-    } catch (error) {
-      console.error(error);
-      return reply.status(500).send({ error: 'Erro ao buscar salas em comum.' });
     }
   });
 

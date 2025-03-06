@@ -10,9 +10,9 @@ const app = fastify();
 
 
 app.register(fastifyCors, {
-    origin: true, // Permite requisições de qualquer origem (ideal para testes)
+    origin: true,
     methods: ["GET", "POST", "PUT", "DELETE"], 
-    credentials: true, // Permite cookies e headers autenticados
+    credentials: true,
 });
 
 

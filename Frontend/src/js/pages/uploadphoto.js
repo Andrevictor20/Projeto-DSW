@@ -45,7 +45,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const formData = new FormData();
     formData.append('file', file);
 
-    // Adicionar indicador de carregamento
     uploadButton.disabled = true;
     uploadButton.textContent = 'Enviando...';
 
@@ -71,7 +70,6 @@ document.addEventListener('DOMContentLoaded', function() {
       console.error('Erro:', error);
       alert('Erro ao enviar a foto.');
     } finally {
-      // Restaurar o botão após o envio
       uploadButton.disabled = false;
       uploadButton.textContent = 'Upload';
     }
@@ -89,12 +87,16 @@ document.addEventListener('DOMContentLoaded', function() {
   function redirectToRoom() {
     const urlParams = new URLSearchParams(window.location.search);
     const roomId = urlParams.get('roomId');
-    window.location.href = `http://localhost:5500/Frontend/src/pages/room.html?id=${roomId}`;
+    console.log('Redirecionando para a sala com ID:', roomId);
+    window.location.href = `http://localhost:5600/src/pages/room.html?id=${roomId}`;
   }
 
   const voltarBtn = document.getElementById('voltarBtn');
   if (voltarBtn && roomId) {
-    voltarBtn.href = `http://localhost:5500/Frontend/src/pages/room.html?id=${roomId}`;
+    voltarBtn.href = `http://localhost:5600/src/pages/room.html?id=${roomId}`;
+    voltarBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      redirectToRoom();
+    });
   }
-  voltarBtn.addEventListener('click', redirectToRoom);
 });

@@ -83,7 +83,15 @@ export async function authRoutes(app: FastifyInstance) {
       return reply.status(404).send({ error: "Usuário não encontrado" });
     }
 
-    reply.clearCookie("session", { path: "/" });
+    reply.clearCookie("session", { 
+      path: "/",
+      domain: "localhost",
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax"
+    });
+
+    console.log('Cookie removido:', !request.cookies.session);
 
     return reply.send({
       message: "Logout realizado com sucesso",

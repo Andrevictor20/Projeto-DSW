@@ -12,9 +12,8 @@ document.addEventListener("DOMContentLoaded", async () => {
   document.querySelector(".btn-secondary").href = `room.html?id=${roomId}`;
 
   try {
-      // Buscar sessão do usuário logado
       const sessionResponse = await fetch("http://localhost:5700/auth/check-session", {
-          credentials: "include" // IMPORTANTE: Envia cookies de autenticação
+          credentials: "include" 
       });
 
       if (!sessionResponse.ok) {
@@ -29,7 +28,6 @@ document.addEventListener("DOMContentLoaded", async () => {
       const loggedUserId = sessionData.user.id;
       console.log("ID do usuário logado:", loggedUserId);
 
-      // Buscar informações da sala
       const roomResponse = await fetch(`http://localhost:5700/rooms/${roomId}`, {
           credentials: "include"
       });
@@ -41,12 +39,10 @@ document.addEventListener("DOMContentLoaded", async () => {
       const roomData = await roomResponse.json();
       console.log("Informações da sala:", roomData);
 
-      // Atualizar o título da página com o nome da sala
       document.querySelector("h1").textContent = `Participantes de ${roomData.name}`;
 
-      // Buscar participantes da sala
       const membersResponse = await fetch(`http://localhost:5700/rooms/${roomId}/members`, {
-          credentials: "include" // Envia cookies para rotas protegidas
+          credentials: "include" 
       });
 
       if (!membersResponse.ok) {
@@ -57,12 +53,11 @@ document.addEventListener("DOMContentLoaded", async () => {
       console.log("Participantes:", members);
 
       const participantList = document.querySelector(".participant-list");
-      participantList.innerHTML = ""; // Limpa lista antes de preencher
-
+      participantList.innerHTML = ""; 
       members.forEach(member => {
           console.log(`Comparando: ${member.user.id} com ${loggedUserId}`);
           
-          // Se for o usuário logado, vai para profile.html, senão para participantprofile.html?id=...
+         
           const profileLink = (member.user.id === loggedUserId) 
               ? "profile.html" 
               : `participantprofile.html?id=${member.user.id}`;
@@ -84,6 +79,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   } catch (error) {
       console.error("Erro:", error.message);
-      alert(error.message); // Mostra erro para o usuário
+      alert(error.message); 
   }
 });

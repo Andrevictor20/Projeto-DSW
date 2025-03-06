@@ -2,7 +2,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   const roomsContainer = document.getElementById("rooms");
 
   try {
-      // Obtém as salas disponíveis
       const response = await fetch("http://localhost:5700/rooms", {
           method: "GET",
           credentials: "include"
@@ -12,19 +11,15 @@ document.addEventListener("DOMContentLoaded", async () => {
 
       const rooms = await response.json();
 
-      // Limpa o container antes de adicionar novos elementos
       roomsContainer.innerHTML = "";
 
       rooms.forEach(room => {
           const roomItem = document.createElement("div");
           roomItem.className = "list-group-item d-flex justify-content-between align-items-center bg-primary text-white p-3 rounded mb-2";
 
-          // Conta o número de participantes na sala
           const currentParticipants = room.participants ? room.participants.length : 0;
 
-          // Verifica se a sala é privada ou aberta
           if (room.privacy === "OPEN") {
-              // Sala aberta -> Botão direto para entrar
               roomItem.innerHTML = `
                   <span>${room.name}</span>
                   <div class="room-info d-flex gap-2">
@@ -34,7 +29,6 @@ document.addEventListener("DOMContentLoaded", async () => {
                   </div>
               `;
           } else {
-              // Sala privada -> Campo para senha
               roomItem.innerHTML = `
                   <span>${room.name}</span>
                   <div class="room-info d-flex gap-2">
@@ -55,7 +49,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 });
 
-// Função para validar senha e entrar na sala privada
 async function enterPrivateRoom(roomId) {
   const passwordInput = document.getElementById(`password-${roomId}`);
   const password = passwordInput.value.trim();
@@ -80,7 +73,6 @@ async function enterPrivateRoom(roomId) {
           throw new Error(errorData.error || "Erro ao entrar na sala");
       }
 
-      // Redireciona para a sala caso a senha esteja correta
       window.location.href = `room.html?id=${roomId}`;
   } catch (error) {
       alert(error.message);
@@ -105,7 +97,6 @@ async function enterOpenRoom(roomId) {
       throw new Error(errorData.error || "Erro ao entrar na sala");
     }
 
-    // Redireciona para a sala
     window.location.href = `room.html?id=${roomId}`;
   } catch (error) {
     alert(error.message);

@@ -10,24 +10,19 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   try {
-      // Busca dados do usuário
       const userResponse = await fetch(`http://localhost:5700/users/${userId}`);
       const user = await userResponse.json();
 
-      // Atualiza o perfil
       const profilePic = document.querySelector(".big-profile-pic");
       profilePic.style.backgroundImage = `url('${user.profilePicture || 'default-avatar.png'}')`;
       document.querySelector("h2").textContent = user.name;
       document.querySelector("p").textContent = user.bio || "Sem biografia disponível";
 
-      // Busca salas do usuário
       const roomsResponse = await fetch(`http://localhost:5700/users/${userId}/rooms`);
       const rooms = await roomsResponse.json();
 
-      // Limpa container
       roomsContainer.innerHTML = "";
 
-      // Cria cards das salas
       rooms.forEach(room => {
           const roomCard = document.createElement("div");
           roomCard.className = "room-card bg-primary rounded p-3 text-center mb-3";
@@ -35,7 +30,6 @@ document.addEventListener("DOMContentLoaded", async () => {
               <h5>${room.name}</h5>
               <p>Participantes ${room.currentParticipants}/${room.maxParticipants}</p>
               <p>${room.privacy === 'PRIVATE' ? 'Privada' : 'Aberta'}</p>
-              <a href="room.html?id=${room.id}" class="btn btn-success mt-2">Entrar</a>
           `;
           roomsContainer.appendChild(roomCard);
       });

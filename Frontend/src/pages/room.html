@@ -38,8 +38,6 @@
         <div class="d-flex flex-wrap justify-content-center mb-4">
             <a href="home.html" class="btn btn-secondary mx-2 mb-2">VOLTAR</a>
             <div class="d-flex">
-                <button class="btn btn-custom mx-2 mb-2">Mais votados</button>
-                <button class="btn btn-custom mx-2 mb-2">Mais recentes</button>
                 <a href="uploadphoto.html" class="btn btn-custom mx-2 mb-2" id="uploadPhotoLink">Upload</a>
                 <a href="participants.html" class="btn btn-custom mx-2 mb-2">Participantes</a>
                 <div class="dropdown mx-2 mb-2">
@@ -48,10 +46,7 @@
                     </button>
                     <div class="dropdown-menu" aria-labelledby="optionsDropdown">
                         <a class="dropdown-item" href="#" id="leaveRoomButton">Sair da sala</a>
-                        <a class="dropdown-item" href="#">Editar sala</a>
-                        <a class="dropdown-item" href="#">Transferir cargo de administradot</a>
-                        <a class="dropdown-item" href="#">Excluir foto da sala</a>
-                        <a class="dropdown-item" href="#">Excluir sala</a>
+                        <a class="dropdown-item" id="deleteRoomButton" href="#">Excluir sala</a>
                     </div>
                 </div>
             </div>
@@ -61,6 +56,9 @@
         </div>
 
         <div class="d-flex flex-row flex-wrap justify-content-center photos-container">
+            <h3 class="mt-5">Fotos da Sala</h3>
+            <div class="row justify-content-center">
+            </div>
         </div>
     </div>
     <footer class="bg-black  text-center text-white mt-5">

@@ -1,6 +1,5 @@
 document.addEventListener("DOMContentLoaded", async () => {
   try {
-      // Verifica se o usuário está autenticado
       const sessionResponse = await fetch("http://localhost:5700/auth/check-session", {
           method: "GET",
           credentials: "include"
@@ -19,7 +18,6 @@ document.addEventListener("DOMContentLoaded", async () => {
           welcomeMessage.textContent = "Bem vindo(a)!";
       }
 
-      // Busca as salas do usuário
       const roomsResponse = await fetch("http://localhost:5700/rooms/user", {
           method: "GET",
           credentials: "include"
@@ -32,13 +30,11 @@ document.addEventListener("DOMContentLoaded", async () => {
       const rooms = await roomsResponse.json();
       const roomsContainer = document.getElementById("rooms-container");
 
-      // Se o usuário não participa de nenhuma sala, exibe uma mensagem
       if (!rooms || rooms.length === 0) {
           roomsContainer.innerHTML = `<p>Você não participa de nenhuma sala ainda. Crie ou entre em uma sala existente!</p>`;
           return;
       }
 
-      // Adiciona as salas dinamicamente
       rooms.forEach(room => {
           const roomCard = document.createElement("div");
           roomCard.className = "col d-flex justify-content-center";

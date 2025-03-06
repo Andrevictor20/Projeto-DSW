@@ -19,7 +19,6 @@ document.addEventListener("DOMContentLoaded", async () => {
       }
 
       try {
-          // Obtém os dados do usuário logado para pegar o email
           const sessionResponse = await fetch("http://localhost:5700/auth/check-session", {
               method: "GET",
               credentials: "include"
@@ -36,7 +35,6 @@ document.addEventListener("DOMContentLoaded", async () => {
               throw new Error("Email do usuário não encontrado.");
           }
 
-          // Envia a requisição para alterar a senha
           const response = await fetch("http://localhost:5700/auth/reset-password", {
               method: "POST",
               headers: {
