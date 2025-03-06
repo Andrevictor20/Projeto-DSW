@@ -1,5 +1,3 @@
-const API_BASE_URL = "http://localhost:5700";
-
 document.addEventListener("DOMContentLoaded", async () => {
     const roomsContainer = document.getElementById("roomparticipation");
     if (!roomsContainer) {
@@ -11,7 +9,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const userId = urlParams.get('id');
 
     try {
-        const response = await fetch(`${API_BASE_URL}/users/${userId}/rooms`, {
+        const response = await fetch(`http://localhost:5700/users/${userId}/rooms`, {
             method: "GET",
             credentials: "include"
         });

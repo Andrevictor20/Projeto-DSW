@@ -1,5 +1,3 @@
-const API_BASE_URL = "http://localhost:5700";
-
 document.addEventListener("DOMContentLoaded", async () => {
   const form = document.querySelector("#deleteAccount form");
 
@@ -14,7 +12,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       }
 
       try {
-          const sessionResponse = await fetch(`${API_BASE_URL}/auth/check-session`, {
+          const sessionResponse = await fetch("http://localhost:5700/auth/check-session", {
               method: "GET",
               credentials: "include"
           });
@@ -34,7 +32,7 @@ document.addEventListener("DOMContentLoaded", async () => {
               return;
           }
 
-          const response = await fetch(`${API_BASE_URL}/users/${userId}`, {
+          const response = await fetch(`http://localhost:5700/users/${userId}`, {
               method: "DELETE",
               headers: {
                   "Content-Type": "application/json"

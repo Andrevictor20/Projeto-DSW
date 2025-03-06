@@ -1,5 +1,3 @@
-const API_BASE_URL = "http://localhost:5700";
-
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.querySelector("form");
 
@@ -27,7 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       try {
-          const response = await fetch(`${API_BASE_URL}/rooms`, {
+          const response = await fetch("http://localhost:5700/rooms", {
               method: "POST",
               credentials: "include",
               headers: {

@@ -1,5 +1,3 @@
-const API_BASE_URL = "http://localhost:5700";
-
 document.addEventListener("DOMContentLoaded", async () => {
   const profilePic = document.querySelector(".main-profile-pic");
   const usernameInput = document.getElementById("username");
@@ -9,7 +7,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   let userId = null;
 
   try {
-      const response = await fetch(`${API_BASE_URL}/auth/check-session`, {
+      const response = await fetch("http://localhost:5700/auth/check-session", {
           method: "GET",
           credentials: "include"
       });
@@ -43,7 +41,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       };
 
       try {
-          const response = await fetch(`${API_BASE_URL}/users/${userId}`, {
+          const response = await fetch(`http://localhost:5700/users/${userId}`, {
               method: "PUT",
               headers: {
                   "Content-Type": "application/json"

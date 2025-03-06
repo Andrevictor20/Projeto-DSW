@@ -1,10 +1,8 @@
-const API_BASE_URL = "http://localhost:5700";
-
 document.addEventListener("DOMContentLoaded", async () => {
   const roomsContainer = document.getElementById("rooms");
 
   try {
-      const response = await fetch(`${API_BASE_URL}/rooms`, {
+      const response = await fetch("http://localhost:5700/rooms", {
           method: "GET",
           credentials: "include"
       });
@@ -61,7 +59,7 @@ async function enterPrivateRoom(roomId) {
   }
 
   try {
-      const response = await fetch(`${API_BASE_URL}/rooms/${roomId}/join`, {
+      const response = await fetch(`http://localhost:5700/rooms/${roomId}/join`, {
           method: "POST",
           credentials: "include",
           headers: {
@@ -85,7 +83,7 @@ async function enterPrivateRoom(roomId) {
 // Função para entrar em sala aberta
 async function enterOpenRoom(roomId) {
   try {
-    const response = await fetch(`${API_BASE_URL}/rooms/${roomId}/join`, {
+    const response = await fetch(`http://localhost:5700/rooms/${roomId}/join`, {
       method: "POST",
       credentials: "include",
       headers: {

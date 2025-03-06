@@ -1,5 +1,3 @@
-const API_BASE_URL = "http://localhost:5700";
-
 document.addEventListener('DOMContentLoaded', function() {
   const uploadButton = document.querySelector('.btn-success');
   const fileInput = document.createElement('input');
@@ -51,7 +49,7 @@ document.addEventListener('DOMContentLoaded', function() {
     uploadButton.textContent = 'Enviando...';
 
     try {
-      const response = await fetch(`${API_BASE_URL}/rooms/${roomId}/photos`, {
+      const response = await fetch(`http://localhost:5700/rooms/${roomId}/photos`, {
         method: 'POST',
         body: formData,
         credentials: 'include',
